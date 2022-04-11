@@ -1,0 +1,36 @@
+div.pl-summary-journals td.centered {
+    text-align: center;    
+}
+
+div.pl-summary-journals td.rowheading {
+  text-align: center;    
+}
+
+
+
+div.pl-summary-journals .hasPopup {
+    position: relative;
+}
+
+div.pl-summary-journals .popup {
+    position: absolute;
+    top: -100px;
+    transform: translateY(70%) scale(0);
+    transition: transform 0.1s ease-in;
+    transform-origin: left;
+    display: inline;
+    background: white;
+    z-index: 20;
+    min-width: 100%;
+    padding: 1rem;
+    border: 1px solid black;
+  }
+
+  div.pl-summary-journals .hasPopup:hover div {
+    transform: translateY(70%) scale(1);
+  }
+
+
+  div.pl-summary-journals table {
+    border-collapse: collapse;
+  }

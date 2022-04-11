@@ -1,0 +1,25 @@
+{   
+    "title": "Compendium Table Maker (by PenLlawen)",   
+    "name": "penllawen-compendium-table-maker",   
+    "description": "Blah blah",   
+    "author": "Richard Gaywood",
+    "version": "1.0.0",
+    "minimumCoreVersion": "0.7.9",
+    "esmodules": [
+      "./scripts/init.js"
+    ],    
+
+    "styles": [
+      "./styles/summary-journals.css"
+    ],  
+
+    "packs": [
+      {
+        "name": "example-macros",
+        "label": "Compendium Summariser example macros",
+        "path": "packs/example-macros.db",
+        "entity": "Macro",
+        "module": "penllawen-compendium-table-maker"
+      }
+    ]        
+  }
