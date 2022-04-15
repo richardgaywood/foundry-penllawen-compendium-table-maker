@@ -4,16 +4,17 @@ import MapMapList from "./map_map_list.mjs";
 
 export default class CompendiumSummariser {
     constructor() {
+        this.buildReport = [];
         this.#resetState();
     }
 
     #resetState() {
         this.compendiums = [];
         this.journal;
+        this.outputJournalName = "";
         this.compendiumFolderNames = new Map();
         this.typeNameFilters = new FilterConfig();
         this.itemNameFilters = new FilterConfig();
-        this.buildReport = [];
     }
 
     addInputCompendium(arg) {
@@ -39,11 +40,16 @@ export default class CompendiumSummariser {
         return this;
     }
 
-    setOutputJournal(journal) {
-        if (!(journal instanceof JournalEntry)) {
-            throw new Error("setOutputJournal() must be passed a JournalEntry");
-        } 
-        this.journal = journal;
+    // setOutputJournal(journal) {
+    //     if (!(journal instanceof JournalEntry)) {
+    //         throw new Error("setOutputJournal() must be passed a JournalEntry");
+    //     } 
+    //     this.journal = journal;
+    //     return this;
+    // }
+
+    createOutputJournalNamed(journalName) {
+        this.outputJournalName = journalName
         return this;
     }
 
@@ -59,6 +65,9 @@ export default class CompendiumSummariser {
 
     async write() {
         this.#getCompendiumFolderData();
+
+        // this.buildReport.push(`Build report for @JournalEntry[${this.journal.id}]{${this.journal.name}}}`);
+        this.buildReport.push(`Build report for <strong>${this.journalName}</strong>:`);
 
         const allItemsByTypeAndFolder = new MapMapList();
         
@@ -130,12 +139,12 @@ export default class CompendiumSummariser {
                 });
             newContent = newContent.concat("\n\n", rendered);
         }
-        const updates =  [{_id: this.journal.id, content: newContent}];
-        await JournalEntry.updateDocuments(updates);
 
 
-        // console.log(this.buildReport);
-        this.#showReport();
+        const data =  [{name: this.outputJournalName, content: newContent}];
+        console.log(data);
+        await JournalEntry.create(data);
+
         // clear vars to guard against being called again
         this.#resetState();
 
@@ -176,7 +185,7 @@ export default class CompendiumSummariser {
     }
 
 
-    #showReport() {
+    showReport() {
         // TODO localisaton
         let d = new Dialog({
             title: 'Select Player',

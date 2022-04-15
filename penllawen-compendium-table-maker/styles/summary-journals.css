@@ -2,10 +2,18 @@ div.pl-summary-journals td.centered {
     text-align: center;    
 }
 
-div.pl-summary-journals td.rowheading {
-  text-align: center;    
+div.pl-summary-journals td.long-text {
+  text-align: left;    
 }
 
+
+
+div.pl-summary-journals td.rowheading {
+  text-align: center;    
+  background: #dddddd;
+  color: #222222;
+  font-size: large;
+}
 
 
 div.pl-summary-journals .hasPopup {
