@@ -1,0 +1,55 @@
+<div class="pl-summary-journals">
+    <table class="table summary-table">
+        <tbody>
+        {{#each folders}}
+            {{#if @key}}
+                <tr><td colspan=6 class="rowheading">{{@key}}</td></tr>
+                <tr>
+                    <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "ITEM.TypeArmor" }}</th>
+                    <th>{{ localize "SWADE.HitLocations" }}</th>
+                    <th>{{ localize "SWADE.MinStrShort" }}</th>
+                    <th>{{ localize "SWADE.Weight" }}</th>
+                    <th>{{ localize "SWADE.Price" }}</th>
+                </tr>
+            {{else}}
+                <tr>
+                    <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "ITEM.TypeArmor" }}</th>
+                    <th>{{ localize "SWADE.HitLocations" }}</th>
+                    <th>{{ localize "SWADE.MinStrShort" }}</th>
+                    <th>{{ localize "SWADE.Weight" }}</th>
+                    <th>{{ localize "SWADE.Price" }}</th>
+                </tr>
+            {{/if}}      
+            {{#each this}}
+                <tr>
+                    <td class="hasPopup">
+                        @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
+                        <div class="popup">{{plainTextDescription}} </div>
+                    </td>
+                    <td class="centered">+{{data.data.armor}}</td>
+                    <td class="centered">
+                        {{#if data.data.locations.torso}}
+                            {{ localize "SWADE.TorsoLocationOneLetter" }}
+                        {{else}}–{{/if}}
+                        {{#if data.data.locations.arms}}
+                            {{ localize "SWADE.ArmsLocationOneLetter" }}
+                        {{else}}–{{/if}}
+                        {{#if data.data.locations.legs}}
+                            {{ localize "SWADE.LegsLocationOneLetter" }}
+                        {{else}}–{{/if}}
+                        {{#if data.data.locations.head}}
+                            {{ localize "SWADE.HeadLocationOneLetter" }}
+                        {{else}}–{{/if}}
+                    </td>
+                    <td class="centered">{{data.data.minStr}}</td>
+                    <td class="centered">{{data.data.weight}}</td>
+                    <td class="centered">{{data.data.price}}</td>
+                </tr>
+            {{/each}}
+        {{/each}}            
+        </tbody>
+    </table>
+</div>
+

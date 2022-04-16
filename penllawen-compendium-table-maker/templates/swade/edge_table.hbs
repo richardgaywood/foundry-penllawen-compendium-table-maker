@@ -1,21 +1,17 @@
 <div class="pl-summary-journals">
     <table class="table summary-table">
         <tbody>
-
-
         {{#each folders}}
             {{#if @key}}
-                <tr><td colspan=9 class="rowheading">{{@key}}</td></tr>
+                <tr><td colspan=2 class="rowheading">{{@key}}</td></tr>
                 <tr>
-                    <th>Name</th>
-                    <th>Requirements</th>
-                    <!-- <th>Source</th> -->
+                    <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "SWADE.Req" }}</th>
                 </tr>
             {{else}}
                 <tr>
-                    <th>Name</th>
-                    <th>Requirements</th>
-                    <!-- <th>Source</th> -->
+                    <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "SWADE.Req" }}</th>
                 </tr>    
             {{/if}}          
             {{#each this}}
@@ -25,7 +21,6 @@
                         <div class="popup">{{plainTextDescription}} Source: {{compendiumLabel}}</div>
                     </td>
                     <td class="long-text">{{data.data.requirements.value}}</td>
-                    <!-- <td class="centered"><em>{{compendiumLabel}}</em></td> -->
                 </tr>
             {{/each}}
         {{/each}}        
