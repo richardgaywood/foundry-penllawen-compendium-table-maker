@@ -17,8 +17,6 @@ export default class CompendiumSummariser {
         // All compendiums being read as input.
         this.compendiums = [];
 
-        this.journal; // UNUSED?
-
         // If we are creating a new JournalEntry, the name it should have.
         this.createOutputJournalName = "";
         // If we are overwriting an existing JournalEntry, this is its ID.
@@ -32,6 +30,9 @@ export default class CompendiumSummariser {
         // Two internal structures holding the names of all types and items to filter out.
         this.typeNameFilters = new FilterConfig();
         this.itemNameFilters = new FilterConfig();
+
+        // If this is toggled to true, we will not attempt to write anything.
+        this.failedValidate = false;
     }
 
     addInputCompendium(arg) {
@@ -41,12 +42,16 @@ export default class CompendiumSummariser {
         } else if (arg instanceof String || typeof arg === "string") {
             compendium = game.packs.get(arg);
             if (compendium === undefined) {
-                // TODO probably better to report the error to the UI
-                throw new Error(`'${arg}' is not a valid Compendium name`);    
+                ui.notifications.error(
+                    game.i18n.format("PCTM.ErrorInvalidCompendiumName", {name: arg}));
+                this.failedValidate = true;
+                return this;
             }
         } else {
-            // TODO probably better to report the error to the UI
-            throw new Error("addInputCompendium() must be passed a CompendiumCollection or compendium string");
+            ui.notifications.error(
+                game.i18n.format("PCTM.ErrorMissingCompendiumName", {}));
+            this.failedValidate = true;
+            return this;
         }
         
         this.compendiums.push(compendium);
@@ -64,13 +69,17 @@ export default class CompendiumSummariser {
     }
 
     overwriteJournalWithID(journalId) {
-        this.overwriteJournalId = journalId;
         const j = game.journal.get(journalId);
+        console.log("j", j);
         if (j === undefined) {
-            throw new Error();
-        }
+            ui.notifications.error(
+                game.i18n.format("PCTM.ErrorMissingJournalID", {id: journalId}));
+            this.failedValidate = true;
+            return this;
+        } 
 
         this.journalName = j.data.name;
+        this.overwriteJournalId = journalId;
         return this;
     }
 
@@ -88,7 +97,14 @@ export default class CompendiumSummariser {
         this.#getCompendiumFolderData();
 
         this.buildReport.addHeading("PCTM.BuildReportTitle", {title: this.journalName})
-        this.buildReport.startSection();
+
+        // Catch-all toggle for when something has already gone wrong; the report
+        // should show what.
+        if (this.failedValidate) {
+            this.buildReport.addFatalError();
+            this.#resetState();
+            return;
+        }
 
         const allItemsByTypeAndFolder = new MapMapList();
         
@@ -122,6 +138,7 @@ export default class CompendiumSummariser {
                 item.compendiumPackage = compendium.metadata.package;
                 item.compendiumName = compendium.metadata.name;
                 item.compendiumLabel = compendium.metadata.label;
+
                 // In the templates, I'm going to build links to the original item,
                 // not this mutated clone. So copy the original ID over to the clone.
                 item.ogId = ogItem.id;
@@ -143,10 +160,12 @@ export default class CompendiumSummariser {
             }
 
             if (itemCountFilteredByType > 0) {
-                // TODO localise
                 const types = Array.from(typesOfItemsFilteredByType).join(", ");
-                // this.buildReport.push(`Filtered ${itemCountFilteredByType} item(s) of type(s) '${types}' from ` +
-                //         `${compendium.metadata.package}.${compendium.metadata.name}`);
+                this.buildReport.addEntry("PCTM.BuildReportCountItemsFiltered", {
+                    count: itemCountFilteredByType,
+                    types: types,
+                    compendium: `${compendium.metadata.package}.${compendium.metadata.name}`
+                });
             }
 
         }
@@ -166,17 +185,15 @@ export default class CompendiumSummariser {
             const data =  [{name: this.createOutputJournalName, content: newContent}];
             await JournalEntry.create(data);
         } else if (this.overwriteJournalId) {
-            const data =  [{id: this.overwriteJournalId, content: newContent}];
-            await JournalEntry.JournalEntry.updateDocuments(data);
+            const data =  [{_id: this.overwriteJournalId, content: newContent}];
+            await JournalEntry.updateDocuments(data);
         } else {
-            //ui.notifications.error(game.i18n.localize("DICE.ErrorNonNumeric"));
-            ui.notifications.error("You must call either createOutputJournalNamed() or overwriteJournalWithID()");
+            this.buildReport.addFatalError();
+            ui.notifications.error(game.i18n.format("PCTM.ErrorNoOutput"));
         }
 
-        this.buildReport.endSection();
         // clear vars to guard against being called again
         this.#resetState();
-
     }
 
     async #renderContentForOneItemType(type, itemsByFolder) {

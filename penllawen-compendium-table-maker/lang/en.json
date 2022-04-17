@@ -6,5 +6,12 @@
 
     "PCTM.BuildReportTitle": "Build report for <strong>{title}</strong>",
     "PCTM.BuildReportFilterItem": "Filtered item '{itemName}' from '{compPackage}.{compName}'",
-    "PCTM.BuildReportMissingTemplate": "Could not render item type '{type}' in game system '{system}'; missing template?"
+    "PCTM.BuildReportMissingTemplate": "Could not render item type '{type}' in game system '{system}'; missing template?",
+    "PCTM.BuildReportFatalError": "Fatal error (see messages at top of screen)",
+    "PCTM.BuildReportCountItemsFiltered": "Filtered {count} item(s) of type(s) '{types}' from '{compendium}'",
+    
+    "PCTM.ErrorInvalidCompendiumName": "'{name}' is not a valid Compendium name",
+    "PCTM.ErrorMissingCompendiumName": "addInputCompendium() must be passed a CompendiumCollection or compendium name",
+    "PCTM.ErrorMissingJournalID": "Could not find JournalEntry with ID '{id}'",
+    "PCTM.ErrorNoOutput": "You must call either createOutputJournalNamed() or overwriteJournalWithID()"
 }
