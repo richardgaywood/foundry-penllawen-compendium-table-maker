@@ -2,5 +2,9 @@
     "PCTM.HeadLocationOneLetter": "H",
     "PCTM.TorsoLocationOneLetter": "T",
     "PCTM.ArmsLocationOneLetter": "A",
-    "PCTM.LegsLocationOneLetter": "L"
+    "PCTM.LegsLocationOneLetter": "L",
+
+    "PCTM.BuildReportTitle": "Build report for <strong>{title}</strong>",
+    "PCTM.BuildReportFilterItem": "Filtered item '{itemName}' from '{compPackage}.{compName}'",
+    "PCTM.BuildReportMissingTemplate": "Could not render item type '{type}' in game system '{system}'; missing template?"
 }

@@ -1,18 +1,35 @@
 import {MODULE_NAME} from "./init.js";
 import FilterConfig from "./filter_config.mjs";
 import MapMapList from "./map_map_list.mjs";
+import BuildReport from "./build_report.mjs";
 
 export default class CompendiumSummariser {
     constructor() {
-        this.buildReport = [];
+        // Set most state vars
         this.#resetState();
+
+        // Note we do not reset BuildReport each time -- it continues to grow if the same
+        // CompendiumSummariser is used to build multiple JournalEntries.
+        this.buildReport = new BuildReport();
     }
 
     #resetState() {
+        // All compendiums being read as input.
         this.compendiums = [];
-        this.journal;
-        this.outputJournalName = "";
+
+        this.journal; // UNUSED?
+
+        // If we are creating a new JournalEntry, the name it should have.
+        this.createOutputJournalName = "";
+        // If we are overwriting an existing JournalEntry, this is its ID.
+        this.overwriteJournalId = "";
+        // The name of the journal being written to, regardless of which mode we're in.
+        this.journalName = "";
+
+        // An internal structure storing the names of all the Compendium Folders, if there are any.
         this.compendiumFolderNames = new Map();
+
+        // Two internal structures holding the names of all types and items to filter out.
         this.typeNameFilters = new FilterConfig();
         this.itemNameFilters = new FilterConfig();
     }
@@ -40,16 +57,20 @@ export default class CompendiumSummariser {
         return this;
     }
 
-    // setOutputJournal(journal) {
-    //     if (!(journal instanceof JournalEntry)) {
-    //         throw new Error("setOutputJournal() must be passed a JournalEntry");
-    //     } 
-    //     this.journal = journal;
-    //     return this;
-    // }
-
     createOutputJournalNamed(journalName) {
-        this.outputJournalName = journalName
+        this.createOutputJournalName = journalName;
+        this.journalName = journalName;
+        return this;
+    }
+
+    overwriteJournalWithID(journalId) {
+        this.overwriteJournalId = journalId;
+        const j = game.journal.get(journalId);
+        if (j === undefined) {
+            throw new Error();
+        }
+
+        this.journalName = j.data.name;
         return this;
     }
 
@@ -66,8 +87,8 @@ export default class CompendiumSummariser {
     async write() {
         this.#getCompendiumFolderData();
 
-        // this.buildReport.push(`Build report for @JournalEntry[${this.journal.id}]{${this.journal.name}}}`);
-        this.buildReport.push(`Build report for <strong>${this.journalName}</strong>:`);
+        this.buildReport.addHeading("PCTM.BuildReportTitle", {title: this.journalName})
+        this.buildReport.startSection();
 
         const allItemsByTypeAndFolder = new MapMapList();
         
@@ -84,8 +105,10 @@ export default class CompendiumSummariser {
                 if (item.documentName !== "Item") { continue; }
                 if (item.name === game.CF.TEMP_ENTITY_NAME) { continue; }
                 if (this.itemNameFilters.shouldFilter(compendium.metadata.name, item.name)) { 
-                    // TODO localise
-                    this.buildReport.push(`Filtered item '${item.name}' from '${compendium.metadata.package}.${compendium.metadata.name}'`);
+                    this.buildReport.addEntry("PCTM.BuildReportFilterItem",
+                        {itemName: item.name, 
+                            compPackage: compendium.metadata.package,
+                            compName: compendium.metadata.name});
                     continue; 
                 }
                 if (this.typeNameFilters.shouldFilter(compendium.metadata.name, type)) { 
@@ -122,8 +145,8 @@ export default class CompendiumSummariser {
             if (itemCountFilteredByType > 0) {
                 // TODO localise
                 const types = Array.from(typesOfItemsFilteredByType).join(", ");
-                this.buildReport.push(`Filtered ${itemCountFilteredByType} item(s) of type(s) '${types}' from ` +
-                        `${compendium.metadata.package}.${compendium.metadata.name}`);
+                // this.buildReport.push(`Filtered ${itemCountFilteredByType} item(s) of type(s) '${types}' from ` +
+                //         `${compendium.metadata.package}.${compendium.metadata.name}`);
             }
 
         }
@@ -133,18 +156,24 @@ export default class CompendiumSummariser {
             const rendered = await this.#renderContentForOneItemType(
                 type, allItemsByTypeAndFolder.getInnerMap(type))
                 .catch((err) => {
-                    const report = `ERROR! Could not render item type '${type}' in game system '${game.system.id}'; missing template?`;
-                    this.buildReport.push(report);
-                    console.error(report);
+                    this.buildReport.addError("PCTM.BuildReportMissingTemplate", {
+                        type: type, system: game.system.id});
                 });
             newContent = newContent.concat("\n\n", rendered);
         }
 
+        if (this.createOutputJournalName) {
+            const data =  [{name: this.createOutputJournalName, content: newContent}];
+            await JournalEntry.create(data);
+        } else if (this.overwriteJournalId) {
+            const data =  [{id: this.overwriteJournalId, content: newContent}];
+            await JournalEntry.JournalEntry.updateDocuments(data);
+        } else {
+            //ui.notifications.error(game.i18n.localize("DICE.ErrorNonNumeric"));
+            ui.notifications.error("You must call either createOutputJournalNamed() or overwriteJournalWithID()");
+        }
 
-        const data =  [{name: this.outputJournalName, content: newContent}];
-        console.log(data);
-        await JournalEntry.create(data);
-
+        this.buildReport.endSection();
         // clear vars to guard against being called again
         this.#resetState();
 
@@ -158,7 +187,7 @@ export default class CompendiumSummariser {
             });    
         }
         return renderTemplate(
-            `modules/${MODULE_NAME}/templates/${game.system.id}/${type}_table.html`, 
+            `modules/${MODULE_NAME}/templates/${game.system.id}/${type}_table.hbs`, 
             { folders: Object.fromEntries(itemsByFolder) }
         );
     }
@@ -184,21 +213,8 @@ export default class CompendiumSummariser {
         }
     }
 
-
     showReport() {
-        // TODO localisaton
-        let d = new Dialog({
-            title: 'Select Player',
-            content: "<p><ul><li>" + this.buildReport.join("</li>\n<li>") + "</li></ul></p>",
-            buttons: {
-                submit: {
-                    icon: '<i class="fas fa-check"></i>',
-                    label: "OK"//,
-                    // callback: (html) => { }
-                },
-        
-            }
-        }).render(true)
+        this.buildReport.show();
     }
 }
 
