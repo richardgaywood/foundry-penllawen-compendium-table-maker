@@ -32,7 +32,13 @@
                     <td class="centered">{{data.data.pp}}</td>
                     <td class="centered">{{data.data.range}}</td>
                     <td class="centered">{{data.data.duration}}</td>
-                    <td class="centered">{{data.data.damage}}</td>
+                    <td class="centered">
+                        {{#if data.data.damage }}
+                            {{data.data.damage}}
+                        {{else}}
+                            &mdash;
+                        {{/if}}
+                    </td>
                 </tr>
             {{/each}}    
         {{/each}}

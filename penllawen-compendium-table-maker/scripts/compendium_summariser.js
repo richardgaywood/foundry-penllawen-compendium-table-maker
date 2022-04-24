@@ -14,6 +14,8 @@ export default class CompendiumSummariser {
     }
 
     #resetState() {
+        this.debug = false;
+
         // All compendiums being read as input.
         this.compendiums = [];
 
@@ -70,7 +72,6 @@ export default class CompendiumSummariser {
 
     overwriteJournalWithID(journalId) {
         const j = game.journal.get(journalId);
-        console.log("j", j);
         if (j === undefined) {
             ui.notifications.error(
                 game.i18n.format("PCTM.ErrorMissingJournalID", {id: journalId}));
@@ -94,7 +95,7 @@ export default class CompendiumSummariser {
     }
 
     async write() {
-        this.#getCompendiumFolderData();
+        await this.#getCompendiumFolderData();
 
         this.buildReport.addHeading("PCTM.BuildReportTitle", {title: this.journalName})
 
@@ -146,7 +147,7 @@ export default class CompendiumSummariser {
                 var folderName = "";
                 if (this.compendiumFolderNames.has(item.ogId)) {
                     folderName = this.compendiumFolderNames.get(item.ogId);
-                }
+                } 
                 // strip all HTML out of the description as it's going to be shown in a
                 // hover box with no formatting.
                 // TODO this is shite, fix.
@@ -172,6 +173,10 @@ export default class CompendiumSummariser {
 
         var newContent = "";
         for (const type of allItemsByTypeAndFolder.getOuterKeys()) {
+
+            if (this.debug)
+                console.log(`Items for '${type}'`, allItemsByTypeAndFolder.getInnerMap(type));
+
             const rendered = await this.#renderContentForOneItemType(
                 type, allItemsByTypeAndFolder.getInnerMap(type))
                 .catch((err) => {
@@ -199,7 +204,6 @@ export default class CompendiumSummariser {
     }
 
     async #renderContentForOneItemType(type, itemsByFolder) {
-        console.log("itemsByFolder", itemsByFolder);
         for (const folder of itemsByFolder.keys()) {
             itemsByFolder.get(folder).sort(function(a, b) {
                 return a.name.localeCompare(b.name);
@@ -221,6 +225,11 @@ export default class CompendiumSummariser {
             const cfolders = await game.CF.FICFolderAPI.loadFolders(packCode);
             const allEntries = await game.packs.get(packCode).getIndex({fields:["name","flags.cf"]});
             const nonFolders = allEntries.filter(x => x.name != game.CF.TEMP_ENTITY_NAME);
+
+            if (this.debug) {
+                console.log("getCompendiumFolderData allEntries", allEntries);
+                console.log("getCompendiumFolderData nonFolders", nonFolders);
+            }
 
             for (const doc of nonFolders) {
                 if (doc.flags.cf === null) { continue; }
