@@ -177,6 +177,8 @@ export default class CompendiumSummariser {
                 .catch((err) => {
                     this.buildReport.addError("PCTM.BuildReportMissingTemplate", {
                         type: type, system: game.system.id});
+                    console.error("Could not render for items: ", 
+                        allItemsByTypeAndFolder.getInnerMap(type));
                 });
             newContent = newContent.concat("\n\n", rendered);
         }

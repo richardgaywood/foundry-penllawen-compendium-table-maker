@@ -1,0 +1,41 @@
+<div class="pl-summary-journals">
+    <table class="table summary-table">
+        <tbody>
+        {{#each folders}}
+            {{#if @key}}
+                <tr><td colspan=6 class="rowheading">{{@key}}</td></tr>
+                <tr>
+                    <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "SWADE.Rank" }}</th>
+                    <th>{{ localize "SWADE.PP" }}</th>
+                    <th>{{ localize "SWADE.Rng" }}</th>
+                    <th>{{ localize "SWADE.Dur" }}</th>
+                    <th>{{ localize "SWADE.Dmg" }}</th>
+                </tr>
+            {{else}}
+                <tr>
+                    <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "SWADE.Rank" }}</th>
+                    <th>{{ localize "SWADE.PP" }}</th>
+                    <th>{{ localize "SWADE.Rng" }}</th>
+                    <th>{{ localize "SWADE.Dur" }}</th>
+                    <th>{{ localize "SWADE.Dmg" }}</th>
+                </tr>
+            {{/if}}      
+            {{#each this}}
+                <tr>
+                    <td class="hasPopup">
+                        @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
+                        {{!-- <div class="popup">{{plainTextDescription}} Source: {{compendiumLabel}}</div> --}}
+                    </td>
+                    <td class="centered">{{data.data.rank}}</td><!-- TODO: localise? -->
+                    <td class="centered">{{data.data.pp}}</td>
+                    <td class="centered">{{data.data.range}}</td>
+                    <td class="centered">{{data.data.duration}}</td>
+                    <td class="centered">{{data.data.damage}}</td>
+                </tr>
+            {{/each}}    
+        {{/each}}
+        </tbody>
+    </table>
+</div>

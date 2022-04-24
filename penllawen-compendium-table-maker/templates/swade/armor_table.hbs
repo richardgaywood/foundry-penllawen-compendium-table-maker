@@ -30,18 +30,18 @@
                     </td>
                     <td class="centered">+{{data.data.armor}}</td>
                     <td class="centered">
-                        {{#if data.data.locations.torso}}
-                            {{ localize "SWADE.TorsoLocationOneLetter" }}
-                        {{else}}–{{/if}}
-                        {{#if data.data.locations.arms}}
-                            {{ localize "SWADE.ArmsLocationOneLetter" }}
-                        {{else}}–{{/if}}
-                        {{#if data.data.locations.legs}}
-                            {{ localize "SWADE.LegsLocationOneLetter" }}
-                        {{else}}–{{/if}}
                         {{#if data.data.locations.head}}
-                            {{ localize "SWADE.HeadLocationOneLetter" }}
-                        {{else}}–{{/if}}
+                            {{ localize "PCTM.HeadLocationOneLetter" }}
+                        {{else}}&ndash;{{/if}}
+                        {{#if data.data.locations.torso}}
+                            {{ localize "PCTM.TorsoLocationOneLetter" }}
+                        {{else}}&ndash;{{/if}}
+                        {{#if data.data.locations.arms}}
+                            {{ localize "PCTM.ArmsLocationOneLetter" }}
+                        {{else}}&ndash;{{/if}}
+                        {{#if data.data.locations.legs}}
+                            {{ localize "PCTM.LegsLocationOneLetter" }}
+                        {{else}}&ndash;{{/if}}
                     </td>
                     <td class="centered">{{data.data.minStr}}</td>
                     <td class="centered">{{data.data.weight}}</td>
