@@ -28,8 +28,9 @@
                         @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
                         <div class="popup">{{plainTextDescription}} </div>
                     </td>
-                    <td class="centered">+{{data.data.parry}}</td>
-                    <td class="centered">{{data.data.cover}}</td>
+
+                    <td class="centered">{{ PCTMValueOrEmDashWithLeadingSign data.data.parry}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDashWithLeadingSign data.data.cover}}</td>
                     <td class="centered">{{data.data.minStr}}</td>
                     <td class="centered">{{data.data.weight}}</td>
                     <td class="centered">{{data.data.price}}</td>

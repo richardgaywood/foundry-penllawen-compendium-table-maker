@@ -37,23 +37,11 @@
                         @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
                         {{!-- <div class="popup">{{plainTextDescription}} Source: {{compendiumLabel}}</div> --}}
                     </td>
-                    <td class="centered">{{data.data.damage}}</td>
-                    <td class="centered">{{data.data.range}}</td>
-                    <td class="centered">
-                        {{#if data.data.parry}}
-                            +{{data.data.parry}}
-                        {{else}}
-                             &mdash;    
-                        {{/if}}
-                    </td>
-                    <td class="centered">
-                        {{#if data.data.ap}}
-                            {{data.data.ap}}
-                        {{else}}
-                             &mdash;    
-                        {{/if}}
-                    </td>
-                    <td class="centered">{{data.data.rof}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash data.data.damage}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash data.data.range}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDashWithLeadingSign data.data.parry}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash data.data.ap }}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash data.data.rof}}</td>
                     <td class="centered">{{data.data.weight}}</td>
                     <td class="centered">{{data.data.minStr}}</td>
                     <td class="centered">{{data.data.price}}</td>

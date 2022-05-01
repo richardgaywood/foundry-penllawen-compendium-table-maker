@@ -5,28 +5,23 @@
             {{#if @key}}
                 <tr><td colspan=3 class="rowheading">{{@key}}</td></tr>
                 <tr>
-                    <th><!-- core skill --></th>
                     <th>{{ localize "SWADE.Name" }}</th>
                     <th>{{ localize "SWADE.LinkAttr" }}</th>
                 </tr>
             {{else}}
                 <tr>
-                    <th><!-- core skill --></th>
                     <th>{{ localize "SWADE.Name" }}</th>
                     <th>{{ localize "SWADE.LinkAttr" }}</th>
                 </tr>
             {{/if}}      
             {{#each this}}
                 <tr>
-                    <td>
-                        {{#if data.data.isCoreSkill}}✪{{/if}}
-                    </td>
                     <td class="hasPopup">
                         @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
                         <div class="popup">{{plainTextDescription}} </div>
                     </td>
                     <td class="centered">
-                        {{ data.data.attribute }}
+                        {{ localizeSkillAttribute data.data.attribute useShorthand=false }}
                     </td>
                 </tr>
             {{/each}}
