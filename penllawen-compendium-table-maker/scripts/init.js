@@ -5,7 +5,6 @@ export const MODULE_NAME = "penllawen-compendium-table-maker";
 import api from "./api.js";
 
 Hooks.on("init", function() {
-//	window.SprawlrunnersExtras = SprawlrunnersExtras();
   console.log("PCTM | init-ing " + MODULE_NAME);    
 
   new api();
@@ -16,12 +15,11 @@ Hooks.on("init", function() {
   });
 
   Handlebars.registerHelper("PCTMValueOrEmDashWithLeadingSign", function(value) {
-    const result = parseInt(number);
-    if (isNaN(result)) return "—";
+    const result = parseInt(value);
+    if (isNaN(result) || result === 0) return "—";
     return result.signedString();    
   });
 });
-
 
 Hooks.on("ready", function() {
   console.log("PCTM | ready");
