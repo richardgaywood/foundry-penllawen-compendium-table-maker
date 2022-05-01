@@ -20,10 +20,42 @@ div.pl-summary-journals .hasPopup {
     position: relative;
 }
 
+/* div.pl-summary-journals .popup {
+	position: absolute;
+	left: 0;
+	top: 100%;
+	z-index: 100;
+	
+	-webkit-backface-visibility: hidden;
+
+	-moz-border-radius:    20px; 
+	-webkit-border-radius: 20px; 
+	border-radius:         20px; 
+	
+	width: 260px; 
+	padding: 20px;
+	opacity: 0;
+			    
+	-webkit-transform: scale(0) skew(50deg);
+	-moz-transform:    scale(0) skew(50deg);
+	-ms-transform:     scale(0) skew(50deg);
+	-o-transform:      scale(0) skew(50deg);
+	
+	-webkit-transform-origin: 0px -30px;
+	-moz-transform-origin:    0px -30px;
+	-ms-transform-origin:     0px -30px;
+	-o-transform-origin:      0px -30px;
+	
+	-webkit-transition: -webkit-transform ease-out .35s, opacity ease-out .4s;
+	-moz-transition:    -moz-transform    ease-out .35s, opacity ease-out .4s;
+	-ms-transition:     -ms-transform     ease-out .35s, opacity ease-out .4s;
+	-o-transition:      -o-transform      ease-out .35s, opacity ease-out .4s;
+}   */
+
 div.pl-summary-journals .popup {
     position: absolute;
-    top: -100px;
-    transform: translateY(70%) scale(0);
+    /* top: 100px; */
+    transform: translateY(100px) scale(0);
     transition: transform 0.1s ease-in;
     transform-origin: left;
     display: inline;
@@ -35,7 +67,7 @@ div.pl-summary-journals .popup {
   }
 
   div.pl-summary-journals .hasPopup:hover div {
-    transform: translateY(70%) scale(1);
+    transform: translateY(-100px) scale(1);
   }
 
 
