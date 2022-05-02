@@ -26,7 +26,9 @@
                 <tr>
                     <td class="hasPopup">
                         @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
-                        <div class="popup">{{plainTextDescription}} </div>
+                        <div class="popup">{{{popupText}}}
+                            <p class="compendiumSource">Source: {{compendiumLabel}}</p>
+                        </div>
                     </td>
                     <td class="centered">+{{data.data.armor}}</td>
                     <td class="centered">
