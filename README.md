@@ -2,13 +2,22 @@
 
 blah blah hello world blah
 
+
+## Currently supported game systems
+
+Right now, only [SWADE](https://gitlab.com/peginc/swade) is supported. However the bulk of the code has been written to be system agnostic and adding support for more systems should be as simple as writing some new Handlebars templates. If you're interested in contributing that, please let me know.
+
+## Getting in touch / asking questions / giving feedback / reporting bugs
+
+I am [docg#2827](https://discordapp.com/users/459741920370098176) on Discord. You can ping me in #swade on the [FoundryVTT Discord](https://discord.com/invite/v9K2hKJ). 
+
+Alternatively, you can [file an issue in GitHub here](https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/issues). If you have something important I definitely shouldn't forget, this is the better way.
+
 ## How to use the module
 
 The module currently has no UI and can only be used by writing macros.
 
 **Wait, wtf, why?** Because this is a surprisingly difficult thing to write a UI for (there's a lot of overlapping options) and I quite honestly do not have time right now. I think the macro interface is good enough for a first release. I might revisit this decision in the future, but I am not making any promises. If you feel strongly that there should be a UI, this can be communicated to me in the form of pull requests ;)
-
-
 
 ### The basics
 
