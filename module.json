@@ -1,0 +1,56 @@
+{   
+    "name": "penllawen-compendium-table-maker",   
+    "title": "Compendium Table Maker (by PenLlawen)",   
+    "description": "A tool to automate the creation of quick reference tables from Compendiums",   
+
+
+
+    "author": "PenLlawen",
+    "authors": [
+      {      
+        "name": "PenLlawen",
+        "discord": "docg#2827",
+        "url": "https://github.com/richardgaywood"}
+    ],
+    "library": false,
+    "socket": false,
+
+    "languages": [
+      {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+      }
+  ],
+
+    "esmodules": [
+      "./scripts/init.js"
+    ],    
+
+    "styles": [
+      "./styles/summary-journals.css"
+    ],  
+
+    "packs": [
+      {
+        "name": "example-macros",
+        "label": "Compendium Summariser example macros",
+        "path": "packs/example-macros.db",
+        "entity": "Macro",
+        "module": "penllawen-compendium-table-maker",
+        "system": "swade"
+      }
+    ],
+
+    "minimumCoreVersion": "9",
+    "compatibleCoreVersion": "9",
+
+    "version": "0.0.1",
+    "url": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker",
+    "manifest": "This is auto replaced",
+    "download": "This is auto replaced",
+    "license": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/blob/main/LICENSE.md",
+    "readme": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker#readme",
+    "bugs": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/issues",
+    "changelog": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/blob/main/CHANGELOG.md"
+  }
