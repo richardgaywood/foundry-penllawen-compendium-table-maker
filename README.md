@@ -1,7 +1,19 @@
 # Compendium summariser
 
-blah blah hello world blah
+This module gives you the ability to condense one or more Compendiums of Foundry Items down into a single quick-reference table in a JournalEntry. 
 
+It can be useful for any system, but was written for Savage Worlds. Because Savage Worlds is a generic RPG system, playing it often involves navigating lists of gear, skills, etc spanning several books: the core rulebook, then the additions and subtractions made by your setting book, then any further additions from supplements or expansions. This can get awkward. 
+
+With this module, you can produce a single, canonical reference for you and your players.
+
+Full support for [Compendium Folders](https://foundryvtt.com/packages/compendium-folders) is included. If your compendiums are organised into folders, those folders will show up in the output as sections in the reference table.
+
+
+![](example-weapons-and-shields.png)
+
+![](example-powers.png)
+
+![](example-armours.png)
 
 ## Currently supported game systems
 
@@ -113,7 +125,6 @@ s.showReport();
 ```
 
 Now I will get two Journals. One will contain only the weapons, the other only the gear.
-
 
 ## Extended example: Deadlands Edges & Hindrances
 
