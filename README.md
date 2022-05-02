@@ -8,6 +8,7 @@ With this module, you can produce a single, canonical reference for you and your
 
 Full support for [Compendium Folders](https://foundryvtt.com/packages/compendium-folders) is included. If your compendiums are organised into folders, those folders will show up in the output as sections in the reference table.
 
+# Example screenshots
 
 ![](example-weapons-and-shields.png)
 
@@ -36,7 +37,8 @@ The module currently has no UI and can only be used by writing macros.
 Create a new macro and change the type to `script`. Then enter the following code:
 
 ```javascript
-var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
+var s = game.modules.get("penllawen-compendium-table-maker")
+    .api.getCompendiumSummariser();
 
 await s.createOutputJournalNamed("SWADE Edges")
   .addInputCompendium("swade-core-rules.swade-edges")
@@ -51,12 +53,30 @@ This will compile the SWADE core rules compendium of all Edges into a single Jou
 
 Each time you run this script, it'll make a whole new JournalEntry, which will be in the world (ie. not inside a Compendium.) You can move it afterwards to wherever you like. Used like this, the module will never overwrite any data in any existing Journal.
 
+### Overwriting an existing JournalEntry
+
+Instead of using `createOutputJournalNamed` to create a new JournalEntry each time the script is run, you might like to overwrite an existing one over and over each time. To do this you need to supply the Foundry ID for the JournalEntry you want to overwrite, like this:
+
+```javascript
+var s = game.modules.get("penllawen-compendium-table-maker")
+    .api.getCompendiumSummariser();
+
+await s.overwriteJournalWithID("ID_GOES_HERE")
+  .addInputCompendium("swade-core-rules.swade-edges")
+  .write();
+
+s.showReport();
+```
+
+**Be careful using this mode**. If you have any hand-created content in that JournalEntry, **it will be overwritten**.
+
 ### Combining multiple Compendiums into a single JournalEntry
 
 To do this, just add more `addInputCompendium(...)` lines:
 
 ```javascript
-var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
+var s = game.modules.get("penllawen-compendium-table-maker")
+    .api.getCompendiumSummariser();
 
 await s.createOutputJournalNamed("Deadlands Edges")
   .addInputCompendium("deadlands-core-rules.deadlands-edges")
@@ -73,7 +93,8 @@ You can add as many as you'd like of these.
 Sometimes you want to say "take all of the items in this compendium except a few special ones." For example, in the Sprawlrunners setting, quite a few Edges from the core book are not available. You can do this like so:
 
 ```javascript
-var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
+var s = game.modules.get("penllawen-compendium-table-maker")
+    .api.getCompendiumSummariser();
 
 await s.createOutputJournalNamed("Sprawlrunners Edges")
   .addInputCompendium("sprawl-core-rules.sprawlrunner-edges")
@@ -104,6 +125,8 @@ await s.createOutputJournalNamed("Sprawlrunners Edges")
 s.showReport();
 ```
 
+**Important Note**: The item name filtering is currently _case sensitive_. So if your item in Foundry is called "Filthy Rich" but you write "filthy rich" or even "Filthy rich" in your macro, it _will not filter successfully_. If in doubt, copy/paste the name directly from the item.
+
 ### Filtering items by type
 
 Some of my houserule compendiums have gear of different types next to each other, for example I have guns and their ammunition in the same compendium. By default, this will produce a single JournalEntry with two tables in it - one for the weapons, one for the ammunition and other gear items. I can change this behaviour by adding a filter on item type:
@@ -118,7 +141,7 @@ await s.createOutputJournalNamed("Houserule weapons")
 
 await s.createOutputJournalNamed("Houserule ammo & gear")
   .addInputCompendium("penllawen-sprawlrunners-extras.weapons")
-      .addTypeNameFilter("weapons")
+      .addTypeNameFilter("weapons")sky-por
   .write();
 
 s.showReport();

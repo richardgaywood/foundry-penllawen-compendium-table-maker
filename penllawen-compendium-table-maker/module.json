@@ -2,12 +2,21 @@
     "name": "penllawen-compendium-table-maker",   
     "title": "Compendium Table Maker (by PenLlawen)",   
     "description": "Blah blah",   
-    "author": "PenLlawen",
+
     "version": "1.0.0",
+
+    "author": "PenLlawen",
+    "authors": [
+      {      
+        "name": "PenLlawen",
+        "discord": "docg#2827",
+        "url": "https://github.com/richardgaywood"}
+    ],
+    "library": false,
+    "socket": false,
+
     "minimumCoreVersion": "9",
     "compatibleCoreVersion": "9",
-
-    "url": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker",
 
     "languages": [
       {
@@ -34,5 +43,14 @@
         "module": "penllawen-compendium-table-maker",
         "system": "swade"
       }
-    ]        
+    ],
+
+
+    "url": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker",
+    "manifest": "This is auto replaced",
+    "download": "This is auto replaced",
+    "license": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/blob/main/LICENSE.md",
+    "readme": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker#readme",
+    "bugs": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/issues",
+    "changelog": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/blob/main/CHANGELOG.md"
   }
