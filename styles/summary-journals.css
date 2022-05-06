@@ -51,3 +51,7 @@ div.pl-summary-journals .popup {
     font-style: italic;
     color: #222222;
   }
+
+  p.paddingGraf {
+    padding-top: 250px;
+  }
