@@ -149,6 +149,19 @@ s.showReport();
 
 Now I will get two Journals. One will contain only the weapons, the other only the gear.
 
+### Ignoring Compendium Folder grouping
+
+If you add the option `disableCompendiumFolderGrouping()` to your macro, like this:
+
+```javascript
+await s.createOutputJournalNamed("Houserule weapons")
+  .disableCompendiumFolderGrouping()
+  .addInputCompendium("swade-core-rules.swade-equipment")
+  .write();
+```
+
+...then the output table will ignore any use of Compendium Folders in the input. Instead of a table broken down into sections, you'll get one single list, sorted alphabetically.
+
 ## Extended example: Deadlands Edges & Hindrances
 
 You can find this example in the Macros compendium included with the module.

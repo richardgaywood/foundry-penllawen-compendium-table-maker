@@ -16,6 +16,9 @@ export default class CompendiumSummariser {
     #resetState() {
         this.debug = false;
 
+        // If set, we will not group output by the name of the Compendium Folder used
+        this.ignoreCompendiumFolderGrouping = false;
+
         // All compendiums being read as input.
         this.compendiums = [];
 
@@ -91,6 +94,11 @@ export default class CompendiumSummariser {
 
     addItemNameFilter(itemName) {
         this.itemNameFilters.addFilterThingToCurrentCategory(itemName);
+        return this;
+    }
+
+    disableCompendiumFolderGrouping() {
+        this.ignoreCompendiumFolderGrouping = true;
         return this;
     }
 
@@ -203,7 +211,7 @@ export default class CompendiumSummariser {
             await JournalEntry.create(data);
         } else if (this.overwriteJournalId) {
             const data =  [{_id: this.overwriteJournalId, content: newContent}];
-            await JournalEntry.updateDocuments(data);
+            await JournalEntry.updateDocuments(data, {permission: 3});
         } else {
             this.buildReport.addFatalError();
             ui.notifications.error(game.i18n.format("PCTM.ErrorNoOutput"));
@@ -228,6 +236,7 @@ export default class CompendiumSummariser {
     /** Create a map of item.id to CompendiumFolders folder name, if it exists. */
     async #getCompendiumFolderData() {
         if (game.CF === undefined) { return; }
+        if (this.ignoreCompendiumFolderGrouping) { return; }
 
         for(const compendium of this.compendiums) {
             const packCode = `${compendium.metadata.package}.${compendium.metadata.name}`;
