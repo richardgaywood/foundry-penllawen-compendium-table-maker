@@ -1,5 +1,10 @@
 ## Beta releases
 
+### v0.0.6 (2022-05-xx)
+
+* Add a note about how CF name sorting works, and an option to sort alphabetically by innermost name
+  (thanks for the bug report Nolt!)
+
 ### v0.0.5 (2022-05-07)
 
 * Add some padding at the bottom of the JournalEntry to work around some CSS wonkiness I don't
