@@ -2,42 +2,15 @@ import {MODULE_NAME} from "./init.js";
 import FilterConfig from "./filter_config.mjs";
 import MapMapList from "./map_map_list.mjs";
 import BuildReport from "./build_report.mjs";
+import CompendiumSummariserConfig from "./compendium_summariser_config.mjs";
 
 export default class CompendiumSummariser {
     constructor() {
-        // Set most state vars
-        this.#resetState();
+        this.config = new CompendiumSummariserConfig();
 
         // Note we do not reset BuildReport each time -- it continues to grow if the same
         // CompendiumSummariser is used to build multiple JournalEntries.
         this.buildReport = new BuildReport();
-    }
-
-    #resetState() {
-        this.debug = false;
-
-        // If set, we will not group output by the name of the Compendium Folder used
-        this.ignoreCompendiumFolderGrouping = false;
-
-        // All compendiums being read as input.
-        this.compendiums = [];
-
-        // If we are creating a new JournalEntry, the name it should have.
-        this.createOutputJournalName = "";
-        // If we are overwriting an existing JournalEntry, this is its ID.
-        this.overwriteJournalId = "";
-        // The name of the journal being written to, regardless of which mode we're in.
-        this.journalName = "";
-
-        // An internal structure storing the names of all the Compendium Folders, if there are any.
-        this.compendiumFolderNames = new Map();
-
-        // Two internal structures holding the names of all types and items to filter out.
-        this.typeNameFilters = new FilterConfig();
-        this.itemNameFilters = new FilterConfig();
-
-        // If this is toggled to true, we will not attempt to write anything.
-        this.failedValidate = false;
     }
 
     addInputCompendium(arg) {
@@ -218,7 +191,7 @@ export default class CompendiumSummariser {
         }
 
         // clear vars to guard against being called again
-        this.#resetState();
+        this.config.resetState();
     }
 
     async #renderContentForOneItemType(type, itemsByFolder) {
@@ -236,7 +209,7 @@ export default class CompendiumSummariser {
     /** Create a map of item.id to CompendiumFolders folder name, if it exists. */
     async #getCompendiumFolderData() {
         if (game.CF === undefined) { return; }
-        if (this.ignoreCompendiumFolderGrouping) { return; }
+        if (this.config.ignoreCompendiumFolderGrouping) { return; }
 
         for(const compendium of this.compendiums) {
             const packCode = `${compendium.metadata.package}.${compendium.metadata.name}`;
