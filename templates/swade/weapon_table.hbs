@@ -34,19 +34,19 @@
             {{#each this}}
                 <tr>
                     <td class="hasPopup">
-                        @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
+                        @Compendium[{{compendiumPackageName}}.{{compendiumName}}.{{ogId}}]{ {{~name~}}}
                         <div class="popup">{{{popupText}}}
                             <p class="compendiumSource">Source: {{compendiumLabel}}</p>
                         </div>
                     </td>
-                    <td class="centered">{{ PCTMValueOrEmDash data.data.damage}}</td>
-                    <td class="centered">{{ PCTMValueOrEmDash data.data.range}}</td>
-                    <td class="centered">{{ PCTMValueOrEmDashWithLeadingSign data.data.parry}}</td>
-                    <td class="centered">{{ PCTMValueOrEmDash data.data.ap }}</td>
-                    <td class="centered">{{ PCTMValueOrEmDash data.data.rof}}</td>
-                    <td class="centered">{{data.data.weight}}</td>
-                    <td class="centered">{{data.data.minStr}}</td>
-                    <td class="centered">{{data.data.price}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash system.damage}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash system.range}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDashWithLeadingSign system.parry}}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash system.ap }}</td>
+                    <td class="centered">{{ PCTMValueOrEmDash system.rof}}</td>
+                    <td class="centered">{{system.weight}}</td>
+                    <td class="centered">{{system.minStr}}</td>
+                    <td class="centered">{{system.price}}</td>
                 </tr>
             {{/each}}
         {{/each}}

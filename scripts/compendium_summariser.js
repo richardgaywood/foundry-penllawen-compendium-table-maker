@@ -62,7 +62,7 @@ export default class CompendiumSummariser {
             return this;
         } 
 
-        this.config.journalName = j.data.name;
+        this.config.journalName = j.name;
         this.config.overwriteJournalId = journalId;
         return this;
     }

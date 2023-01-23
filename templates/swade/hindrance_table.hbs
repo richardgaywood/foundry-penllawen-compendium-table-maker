@@ -17,13 +17,13 @@
             {{#each this}}
                 <tr>
                     <td class="hasPopup">
-                        @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
+                        @Compendium[{{compendiumPackageName}}.{{compendiumName}}.{{ogId}}]{ {{~name~}}}
                         <div class="popup">{{{popupText}}}
                             <p class="compendiumSource">Source: {{compendiumLabel}}</p>
                         </div>
                     </td>
                     <td class="centered">
-                        {{#if data.data.major}}
+                        {{#if system.major}}
                             {{ localize "SWADE.Major"}}
                         {{else}}
                             {{ localize "SWADE.Minor"}}

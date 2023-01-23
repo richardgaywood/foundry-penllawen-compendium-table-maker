@@ -17,12 +17,12 @@
             {{#each this}}
                 <tr>
                     <td class="hasPopup">
-                        @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
+                        @Compendium[{{compendiumPackageName}}.{{compendiumName}}.{{ogId}}]{ {{~name~}}}
                         <div class="popup">{{{popupText}}}
                             <p class="compendiumSource">Source: {{compendiumLabel}}</p>
                         </div>
                     </td>
-                    <td class="long-text">{{data.data.requirements.value}}</td>
+                    <td class="long-text">{{system.requirements.value}}</td>
                 </tr>
             {{/each}}
         {{/each}}        

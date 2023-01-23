@@ -5,7 +5,7 @@
     "PCTM.LegsLocationOneLetter": "L",
 
     "PCTM.BuildReportTitle": "Build report for <strong>{title}</strong>",
-    "PCTM.BuildReportFilterItem": "Filtered item '{itemName}' from '{compPackage}.{compName}'",
+    "PCTM.BuildReportFilterItem": "Filtered item '{itemName}' from '{compPackageName}.{compName}'",
     "PCTM.BuildReportMissingTemplate": "Could not render item type '{type}' in game system '{system}'; missing template?",
     "PCTM.BuildReportFatalError": "Fatal error (see messages at top of screen)",
     "PCTM.BuildReportCountItemsFiltered": "Filtered {count} item(s) of type(s) '{types}' from '{compendium}'",

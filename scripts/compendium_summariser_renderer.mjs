@@ -35,7 +35,7 @@ export default class CompendiumSummariserRenderer {
                 if (config.itemNameFilters.shouldFilter(compendium.metadata.name, item.name)) { 
                     buildReport.addEntry("PCTM.BuildReportFilterItem",
                         {itemName: item.name, 
-                            compPackage: compendium.metadata.package,
+                            compPackageName: compendium.metadata.packageName,
                             compName: compendium.metadata.name});
                     continue; 
                 }
@@ -47,7 +47,7 @@ export default class CompendiumSummariserRenderer {
 
                 // Tuck some metadata about the compendium this item came from into it
                 // so we can reference these in the table templates.
-                item.compendiumPackage = compendium.metadata.package;
+                item.compendiumPackageName = compendium.metadata.packageName;
                 item.compendiumName = compendium.metadata.name;
                 item.compendiumLabel = compendium.metadata.label;
 
@@ -63,11 +63,11 @@ export default class CompendiumSummariserRenderer {
                 // hover box with no formatting.
                 // TODO this is shite, fix.
                 // TODO also it barfs when it's passed things that aren't items
-                if (item.data.data !== undefined) {
-                    item.plainTextDescription = item.data.data.description
+                if (item.system.data !== undefined) {
+                    item.plainTextDescription = item.system.data.description
                             .replace(/(<([^>]+)>)/gi, "");
 
-                    item.popupText = item.data.data.description;
+                    item.popupText = item.system.data.description;
                     item.popupText = item.popupText.replace(/<.?div.*?>/gi, "");  
                     item.popupText = item.popupText.replace(/<.?span.*?>/gi, "");  
                 }
@@ -80,7 +80,7 @@ export default class CompendiumSummariserRenderer {
                 buildReport.addEntry("PCTM.BuildReportCountItemsFiltered", {
                     count: itemCountFilteredByType,
                     types: types,
-                    compendium: `${compendium.metadata.package}.${compendium.metadata.name}`
+                    compendium: `${compendium.metadata.packageName}.${compendium.metadata.name}`
                 });
             }
 
@@ -121,7 +121,6 @@ export default class CompendiumSummariserRenderer {
         }
     }    
 
-
     async #renderContentForOneItemType(type, itemsByFolder) {
         for (const folder of itemsByFolder.keys()) {
             itemsByFolder.get(folder).sort(function(a, b) {
@@ -136,35 +135,45 @@ export default class CompendiumSummariserRenderer {
 
     /** Create a map of item.id to CompendiumFolders folder name, if it exists. */
     async #getCompendiumFolderData() {
-        if (game.CF === undefined) { 
-            if (this.config.debug) { console.log("CF not detected"); }
-            return; 
-        }
-        if (this.config.ignoreCompendiumFolderGrouping) { 
-            if (this.config.debug) { console.log("ignoring CF"); }
-            return; 
-        }
+        // This code is currently (very) broken; for now, I am going to ignore CompendiumFolders support.
+        return;
 
-        for(const compendium of this.config.compendiums) {
-            const packCode = `${compendium.metadata.package}.${compendium.metadata.name}`;
+    //     if (game.CF === undefined) { 
+    //         if (this.config.debug) { console.log("CF not detected"); }
+    //         return; 
+    //     }
+    //     if (this.config.ignoreCompendiumFolderGrouping) { 
+    //         if (this.config.debug) { console.log("ignoring CF"); }
+    //         return; 
+    //     }
 
-            const cfolders = await game.CF.FICFolderAPI.loadFolders(packCode);
-            const allEntries = await game.packs.get(packCode).getIndex({fields:["name","flags.cf"]});
-            const nonFolders = allEntries.filter(x => x.name != game.CF.TEMP_ENTITY_NAME);
+    //     for(const compendium of this.config.compendiums) {
+    //         const packCode = `${compendium.metadata.packageName}.${compendium.metadata.name}`;
 
-            if (this.config.debug) {
-                console.log("getCompendiumFolderData allEntries", allEntries);
-                console.log("getCompendiumFolderData nonFolders", nonFolders);
-            }
+    //         const cfolders = await game.CF.FICFolderAPI.loadFolders(packCode);
+    //         const allEntries = await game.packs.get(packCode).getIndex({fields:["name","flags.cf"]});
+    //         const nonFolders = allEntries.filter(x => x.name != game.CF.TEMP_ENTITY_NAME);
 
-            for (const doc of nonFolders) {
-                if (doc.flags.cf === null) { continue; }
-                const folderId = doc.flags.cf.id; 
-                if (folderId) {
-                    this.compendiumFolderNames.set(doc._id, cfolders.get(folderId).name);
-                }
-            }                
-        }
+    //         if (this.config.debug) {
+    //             console.log("getCompendiumFolderData allEntries", allEntries);
+    //             console.log("getCompendiumFolderData nonFolders", nonFolders);
+    //         }
+
+    //         console.log("nonFolders", nonFolders);
+
+
+    //         for (const doc of nonFolders) {
+    //             if (doc.flags === null || doc.flags.cf === null) { continue; }
+    //             // NB: doc.flags is gone in Foundry V10, I do not know where
+    //             // CF now puts the folder metadata -- it doesn't appear to have
+    //             // an API to read that, and I am reluctant to tightly bind to its
+    //             // internal private code.
+    //             const folderId = doc.flags.cf.id; 
+    //             if (folderId) {
+    //                 this.compendiumFolderNames.set(doc._id, cfolders.get(folderId).name);
+    //             }
+    //         }                
+    //     }
     }
 
 }
