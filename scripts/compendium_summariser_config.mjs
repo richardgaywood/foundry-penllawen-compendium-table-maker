@@ -5,6 +5,11 @@ export default class CompendiumSummariserConfig {
 
     constructor() {
         this.resetConfig();
+
+        // The ID of the Journal we are writing pages into; 
+        // NB this is not reset on each call to write(), so is not
+        // in the resetConfig method.
+        this.outputJournalId = "";
     }
 
     resetConfig() {
@@ -16,17 +21,11 @@ export default class CompendiumSummariserConfig {
         // If set, we will not group output by the name of the Compendium Folder used
         this.ignoreCompendiumFolderGrouping = false;
 
-        // If we are creating a new JournalEntry, the name it should have.
-        this.createOutputJournalName = "";
-        // If we are overwriting an existing JournalEntry, this is its ID.
-        this.overwriteJournalId = "";
-        // The name of the journal being written to, regardless of which mode we're in.
-        this.journalName = "";
+        // The name of the journal page we are going to create and then write to.
+        this.journalPageName = "";
 
         // Two internal structures holding the names of all types and items to filter out.
         this.typeNameFilters = new FilterConfig();
         this.itemNameFilters = new FilterConfig();
     }
-
-
 }

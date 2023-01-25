@@ -109,16 +109,19 @@ export default class CompendiumSummariserRenderer {
         // whitespace.
         newContent = newContent.concat('<p class="paddingGraf"></p>');
 
-        if (config.createOutputJournalName) {
-            const data =  [{name: config.createOutputJournalName, content: newContent}];
-            await JournalEntry.create(data);
-        } else if (config.overwriteJournalId) {
-            const data =  [{_id: config.overwriteJournalId, content: newContent}];
-            await JournalEntry.updateDocuments(data, {permission: 3});
+        if (config.outputJournalId && config.journalPageName) {
+            JournalEntryPage.create({
+                    name: config.journalPageName, 
+                    text: {content: newContent},
+                    title: {show: true, level: 1}
+            }, {
+                parent: game.journal.get(config.outputJournalId), 
+                permission: 3
+            });
         } else {
-            buildReport.addFatalError();
             ui.notifications.error(game.i18n.format("PCTM.ErrorNoOutput"));
         }
+
     }    
 
     async #renderContentForOneItemType(type, itemsByFolder) {
