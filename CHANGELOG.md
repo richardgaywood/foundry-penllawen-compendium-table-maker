@@ -1,5 +1,14 @@
 ## Beta releases
 
+### v0.0.6 (2023-01-xx)
+
+* Fixed to work under Foundry v10. (Long overdue, I know.)
+* Added support for Foundry v10's new multi-page journals -- see the docs for some small changes you need to make to your scripts.
+* Removed support for overwriting journals in the name of reducing code complexity (if you're mad about that, shout, I could re-add it).
+* Removed support for CompendiumFolder support - it was broken in v10 and I haven't figured out why/how yet. This code was always dodgy (it has to examine CF internal data structures) so I might not bring this back.
+* Fixed a bug where compendiums in the world (as opposed to in a module) would have the incorrect path generated, resulting in broken links in the generated journal
+* Added support for SWADE's new (well, new-ish) "consumable" item type
+
 ### v0.0.5 (2022-05-07)
 
 * Add some padding at the bottom of the JournalEntry to work around some CSS wonkiness I don't

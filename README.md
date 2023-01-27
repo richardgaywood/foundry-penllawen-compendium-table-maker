@@ -6,8 +6,6 @@ It can be useful for any system, but was written for Savage Worlds. Because Sava
 
 With this module, you can produce a single, canonical reference for you and your players.
 
-Full support for [Compendium Folders](https://foundryvtt.com/packages/compendium-folders) is included. If your compendiums are organised into folders, those folders will show up in the output as sections in the reference table.
-
 # Example screenshots
 
 ![](example-weapons-and-shields.png)
@@ -30,47 +28,35 @@ Alternatively, you can [file an issue in GitHub here](https://github.com/richard
 
 The module currently has no UI and can only be used by writing macros.
 
-**Wait, wtf, why?** Because this is a surprisingly difficult thing to write a UI for (there's a lot of overlapping options) and I quite honestly do not have time right now. I think the macro interface is good enough for a first release. I might revisit this decision in the future, but I am not making any promises. If you feel strongly that there should be a UI, this can be communicated to me in the form of pull requests ;)
+**Wait, wtf, why?** Because this is a surprisingly difficult thing to write a UI for (there's a lot of overlapping options) and I quite honestly do not have time right now. I think the macro interface is good enough for a first release. I might revisit this decision in the future, but I am not making any promises. If you feel strongly that there should be a UI, this can be communicated to me in the form of pull requests that add one ;)
 
 ### The basics
 
 Create a new macro and change the type to `script`. Then enter the following code:
 
 ```javascript
-var s = game.modules.get("penllawen-compendium-table-maker")
-    .api.getCompendiumSummariser();
+var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
 
-await s.createOutputJournalNamed("SWADE Edges")
-  .addInputCompendium("swade-core-rules.swade-edges")
-  .write();
+await s.makeNewJournalNamed("This is my Journal");
+
+await s.addJournalPageNamed("Gear")
+  .addInputCompendium("swade-core-rules.swade-equipment")
+  .writeJournalPage();
+
+await s.addJournalPageNamed("Skills")
+  .addInputCompendium("swade-core-rules.swade-skills")
+  .writeJournalPage();
 
 s.showReport();
 ```
 
-This will compile the SWADE core rules compendium of all Edges into a single JournalEntry called "SWADE Edges". Obviously, you can change the name of the output journal and the input Compendium as you please. Note that you need the full "pack name" of the Compendium, in other words `swade-core-rules.swade-edges` and not just `swade-edges`. 
+This will compile the SWADE core rules compendium of all Edges and Gear items into a single JournalEntry with two pages, one for each. Obviously, you can change the name of the output journal and pages, and the input Compendium as you please. Note that you need the full "pack name" of the Compendium, in other words `swade-core-rules.swade-edges` and not just `swade-edges`. 
 
 `showReport()` at the end is optional but recommended. It'll pop up a litle dialog telling you what the module did.
 
 Each time you run this script, it'll make a whole new JournalEntry, which will be in the world (ie. not inside a Compendium.) You can move it afterwards to wherever you like. Used like this, the module will never overwrite any data in any existing Journal.
 
-### Overwriting an existing JournalEntry
-
-Instead of using `createOutputJournalNamed` to create a new JournalEntry each time the script is run, you might like to overwrite an existing one over and over each time. To do this you need to supply the Foundry ID for the JournalEntry you want to overwrite, like this:
-
-```javascript
-var s = game.modules.get("penllawen-compendium-table-maker")
-    .api.getCompendiumSummariser();
-
-await s.overwriteJournalWithID("ID_GOES_HERE")
-  .addInputCompendium("swade-core-rules.swade-edges")
-  .write();
-
-s.showReport();
-```
-
-**Be careful using this mode**. If you have any hand-created content in that JournalEntry, **it will be overwritten**.
-
-### Combining multiple Compendiums into a single JournalEntry
+### Combining multiple Compendiums into a single Journal Page
 
 To do this, just add more `addInputCompendium(...)` lines:
 
@@ -78,15 +64,17 @@ To do this, just add more `addInputCompendium(...)` lines:
 var s = game.modules.get("penllawen-compendium-table-maker")
     .api.getCompendiumSummariser();
 
-await s.createOutputJournalNamed("Deadlands Edges")
+await s.makeNewJournalNamed("This is my Journal for Deadlands");
+
+await s.addJournalPageNamed("Deadlands Edges")
   .addInputCompendium("deadlands-core-rules.deadlands-edges")
   .addInputCompendium("swade-core-rules.swade-edges")
-  .write();  
+  .writeJournalPage();  
 
 s.showReport();
 ```
 
-You can add as many as you'd like of these.
+You can add as many as you'd like of these. This is a great way to combine the items from core SWADE with the items from a setting like Deadlands.
 
 ### Filtering items by name
 
@@ -96,7 +84,9 @@ Sometimes you want to say "take all of the items in this compendium except a few
 var s = game.modules.get("penllawen-compendium-table-maker")
     .api.getCompendiumSummariser();
 
-await s.createOutputJournalNamed("Sprawlrunners Edges")
+await s.makeNewJournalNamed("This is my Journal for Sprawlrunners");
+
+await s.addJournalPageNamed("Sprawlrunners Edges")
   .addInputCompendium("sprawl-core-rules.sprawlrunner-edges")
   .addInputCompendium("swade-core-rules.swade-edges")
     .addItemNameFilter("Arcane Background (Gifted)")  
@@ -120,7 +110,7 @@ await s.createOutputJournalNamed("Sprawlrunners Edges")
     .addItemNameFilter("Rapid Recharge")
     .addItemNameFilter("Soul Drain")
     .addItemNameFilter("Wizard")
-  .write();
+  .writeJournalPage();
 
 s.showReport();
 ```
@@ -134,37 +124,24 @@ Some of my houserule compendiums have gear of different types next to each other
 ```javascript
 var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
 
-await s.createOutputJournalNamed("Houserule weapons")
+await s.makeNewJournalNamed("This is my Journal for houseruled items");
+
+await s.addJournalPageNamed("Houserule weapons")
   .addInputCompendium("penllawen-sprawlrunners-extras.weapons")
       .addTypeNameFilter("gear")
-  .write();
+  .writeJournalPage();
 
-await s.createOutputJournalNamed("Houserule ammo & gear")
+await s.addJournalPageNamed("Houserule ammo & gear")
   .addInputCompendium("penllawen-sprawlrunners-extras.weapons")
-      .addTypeNameFilter("weapons")sky-por
-  .write();
+      .addTypeNameFilter("weapons")
+  .writeJournalPage();
 
 s.showReport();
 ```
 
-Now I will get two Journals. One will contain only the weapons, the other only the gear.
-
-### Ignoring Compendium Folder grouping
-
-If you add the option `disableCompendiumFolderGrouping()` to your macro, like this:
-
-```javascript
-await s.createOutputJournalNamed("Houserule weapons")
-  .disableCompendiumFolderGrouping()
-  .addInputCompendium("swade-core-rules.swade-equipment")
-  .write();
-```
-
-...then the output table will ignore any use of Compendium Folders in the input. Instead of a table broken down into sections, you'll get one single list, sorted alphabetically.
+Now I will get one Journal with two pages. One will contain only the weapons, the other only the gear.
 
 ## Extended example: Deadlands Edges & Hindrances
-
-You can find this example in the Macros compendium included with the module.
 
 ```javascript
 var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
