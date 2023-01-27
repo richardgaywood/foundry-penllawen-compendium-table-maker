@@ -84,7 +84,6 @@ export default class CompendiumSummariserRenderer {
                     compendium: `${compendium.metadata.packageName}.${compendium.metadata.name}`
                 });
             }
-
         }
 
         var newContent = "";
