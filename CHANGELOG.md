@@ -1,6 +1,8 @@
-## Beta releases
+## V1.0 releases
 
-### v0.0.6 (2023-01-xx)
+### v1.0.6 (2023-01-27)
+
+The "I can't believe it's not dead" release.
 
 * Fixed to work under Foundry v10. (Long overdue, I know.)
 * Added support for Foundry v10's new multi-page journals -- see the docs for some small changes you need to make to your scripts.
@@ -9,6 +11,8 @@
 * Fixed a bug where compendiums in the world (as opposed to in a module) would have the incorrect path generated, resulting in broken links in the generated journal
 * Added support for SWADE's new (well, new-ish) "consumable" item type
 * Removed the example macros compendium (which I suspect just cluttered up everyone's worlds), and moved the example macros into the README file instead (which also means I only need to keep one copy up to date when I change the module.)
+
+## Beta releases
 
 ### v0.0.5 (2022-05-07)
 
