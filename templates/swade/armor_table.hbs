@@ -25,29 +25,29 @@
             {{#each this}}
                 <tr>
                     <td class="hasPopup">
-                        @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
+                        @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}
                         <div class="popup">{{{popupText}}}
                             <p class="compendiumSource">Source: {{compendiumLabel}}</p>
                         </div>
                     </td>
-                    <td class="centered">+{{data.data.armor}}</td>
+                    <td class="centered">+{{system.armor}}</td>
                     <td class="centered">
-                        {{#if data.data.locations.head}}
+                        {{#if system.locations.head}}
                             {{ localize "PCTM.HeadLocationOneLetter" }}
                         {{else}}&ndash;{{/if}}
-                        {{#if data.data.locations.torso}}
+                        {{#if system.locations.torso}}
                             {{ localize "PCTM.TorsoLocationOneLetter" }}
                         {{else}}&ndash;{{/if}}
-                        {{#if data.data.locations.arms}}
+                        {{#if system.locations.arms}}
                             {{ localize "PCTM.ArmsLocationOneLetter" }}
                         {{else}}&ndash;{{/if}}
-                        {{#if data.data.locations.legs}}
+                        {{#if system.locations.legs}}
                             {{ localize "PCTM.LegsLocationOneLetter" }}
                         {{else}}&ndash;{{/if}}
                     </td>
-                    <td class="centered">{{data.data.minStr}}</td>
-                    <td class="centered">{{data.data.weight}}</td>
-                    <td class="centered">{{data.data.price}}</td>
+                    <td class="centered">{{system.minStr}}</td>
+                    <td class="centered">{{system.weight}}</td>
+                    <td class="centered">{{system.price}}</td>
                 </tr>
             {{/each}}
         {{/each}}            

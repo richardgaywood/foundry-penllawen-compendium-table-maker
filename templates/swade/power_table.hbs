@@ -25,16 +25,16 @@
             {{#each this}}
                 <tr>
                     <td class="hasPopup">
-                        @Compendium[{{compendiumPackage}}.{{compendiumName}}.{{ogId}}]{ {{~data.name~}}}
+                        @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}
                         <div class="popup">{{{popupText}}}
                             <p class="compendiumSource">Source: {{compendiumLabel}}</p>
                         </div>
                     </td>
-                    <td class="centered">{{data.data.rank}}</td><!-- TODO: localise? -->
-                    <td class="centered">{{data.data.pp}}</td>
-                    <td class="centered">{{data.data.range}}</td>
-                    <td class="centered">{{data.data.duration}}</td>
-                    <td class="centered">{{PCTMValueOrEmDash data.data.damage}}</td>
+                    <td class="centered">{{system.rank}}</td><!-- TODO: localise? -->
+                    <td class="centered">{{system.pp}}</td>
+                    <td class="centered">{{system.range}}</td>
+                    <td class="centered">{{system.duration}}</td>
+                    <td class="centered">{{PCTMValueOrEmDash system.damage}}</td>
                     </td>
                 </tr>
             {{/each}}    

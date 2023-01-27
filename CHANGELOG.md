@@ -1,9 +1,18 @@
+## V1.0 releases
+
+### v1.0.6 (2023-01-27)
+
+The "I can't believe it's not dead" release.
+
+* Fixed to work under Foundry v10. (Long overdue, I know.)
+* Added support for Foundry v10's new multi-page journals -- see the docs for some small changes you need to make to your scripts.
+* Removed support for overwriting journals in the name of reducing code complexity (if you're mad about that, shout, I could re-add it).
+* Removed support for CompendiumFolder support - it was broken in v10 and I haven't figured out why/how yet. This code was always dodgy (it has to examine CF internal data structures) so I might not bring this back.
+* Fixed a bug where compendiums in the world (as opposed to in a module) would have the incorrect path generated, resulting in broken links in the generated journal
+* Added support for SWADE's new (well, new-ish) "consumable" item type
+* Removed the example macros compendium (which I suspect just cluttered up everyone's worlds), and moved the example macros into the README file instead (which also means I only need to keep one copy up to date when I change the module.)
+
 ## Beta releases
-
-### v0.0.6 (2022-05-xx)
-
-* Add a note about how CF name sorting works, and an option to sort alphabetically by innermost name
-  (thanks for the bug report Nolt!)
 
 ### v0.0.5 (2022-05-07)
 

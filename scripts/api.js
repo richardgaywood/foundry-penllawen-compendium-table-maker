@@ -5,7 +5,7 @@ import CompendiumSummariser from "./compendium_summariser.js";
 
 export default class api {
     static getCompendiumSummariser() {
-        return new CompendiumSummariser()
+        return new CompendiumSummariser();
     }
 }
 

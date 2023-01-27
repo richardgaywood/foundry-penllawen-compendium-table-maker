@@ -31,19 +31,8 @@
       "./styles/summary-journals.css"
     ],  
 
-    "packs": [
-      {
-        "name": "example-macros",
-        "label": "Compendium Summariser example macros",
-        "path": "packs/example-macros.db",
-        "entity": "Macro",
-        "module": "penllawen-compendium-table-maker",
-        "system": "swade"
-      }
-    ],
-
-    "minimumCoreVersion": "9",
-    "compatibleCoreVersion": "9",
+    "minimumCoreVersion": "10",
+    "compatibleCoreVersion": "10",
 
     "version": "0.0.1",
     "url": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker",

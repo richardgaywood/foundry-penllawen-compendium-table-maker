@@ -7,6 +7,7 @@
                 <tr><td colspan=4 class="rowheading">{{@key}}</td></tr>
                 <tr>
                     <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "SWADE.Charges" }}</th>
                     <th>{{ localize "SWADE.Weight" }}</th>
                     <th>{{ localize "SWADE.Price" }}</th>
                     <th>{{ localize "SWADE.Quantity" }}</th
@@ -14,6 +15,7 @@
             {{else}}
                 <tr>
                     <th>{{ localize "SWADE.Name" }}</th>
+                    <th>{{ localize "SWADE.Charges" }}</th>
                     <th>{{ localize "SWADE.Weight" }}</th>
                     <th>{{ localize "SWADE.Price" }}</th>
                     <th>{{ localize "SWADE.Quantity" }}</th
@@ -27,6 +29,7 @@
                             <p class="compendiumSource">Source: {{compendiumLabel}}</p>
                         </div>
                     </td>
+                    <td class="centered">{{system.charges.max}}</td>
                     <td class="centered">{{system.weight}}</td>
                     <td class="centered">{{system.price}}</td>
                     <td class="centered">{{system.quantity}}</td>
