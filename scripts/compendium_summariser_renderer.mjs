@@ -16,7 +16,7 @@ export default class CompendiumSummariserRenderer {
 
         await this.#getCompendiumFolderData();
 
-        this.buildReport.addHeading("PCTM.BuildReportTitle", {title: config.journalName})
+        this.buildReport.addHeading("PCTM.BuildReportTitle", {title: config.journalPageName})
 
         const allItemsByTypeAndFolder = new MapMapList();
         
@@ -47,6 +47,7 @@ export default class CompendiumSummariserRenderer {
 
                 // Tuck some metadata about the compendium this item came from into it
                 // so we can reference these in the table templates.
+                item.metadata_id = compendium.metadata.id;
                 item.compendiumPackageName = compendium.metadata.packageName;
                 item.compendiumName = compendium.metadata.name;
                 item.compendiumLabel = compendium.metadata.label;
