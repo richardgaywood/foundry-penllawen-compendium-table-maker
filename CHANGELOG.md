@@ -8,6 +8,7 @@
 * Removed support for CompendiumFolder support - it was broken in v10 and I haven't figured out why/how yet. This code was always dodgy (it has to examine CF internal data structures) so I might not bring this back.
 * Fixed a bug where compendiums in the world (as opposed to in a module) would have the incorrect path generated, resulting in broken links in the generated journal
 * Added support for SWADE's new (well, new-ish) "consumable" item type
+* Removed the example macros compendium (which I suspect just cluttered up everyone's worlds), and moved the example macros into the README file instead (which also means I only need to keep one copy up to date when I change the module.)
 
 ### v0.0.5 (2022-05-07)
 

@@ -146,7 +146,9 @@ Now I will get one Journal with two pages. One will contain only the weapons, th
 ```javascript
 var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
 
-await s.createOutputJournalNamed("Deadlands Edges")
+await s.makeNewJournalNamed("Deadlands stuff");
+
+await s.addJournalPageNamed("Deadlands Edges")
   .addInputCompendium("deadlands-core-rules.deadlands-edges")
   .addInputCompendium("swade-core-rules.swade-edges")
     .addItemNameFilter("Arcane Background (Gifted)")  
@@ -155,12 +157,48 @@ await s.createOutputJournalNamed("Deadlands Edges")
     .addItemNameFilter("Arcane Background (Psionics)")  
     .addItemNameFilter("Arcane Background (Weird Science)")  
     .addItemNameFilter("Soul Drain")  
-  .write();
+  .writeJournalPage();
 
-await s.createOutputJournalNamed("Deadlands Hindrances")
+await s.addJournalPageNamed("Deadlands Hindrances")
   .addInputCompendium("deadlands-core-rules.deadlands-hindrances")
   .addInputCompendium("swade-core-rules.swade-hindrances")
-  .write();
+  .writeJournalPage();
+
+s.showReport();
+```
+
+## Extended example: Sprawnlunners Edges
+
+```javascript
+var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
+
+await s.makeNewJournalNamed("Sprawlrunners stuff");
+
+await s.addJournalPageNamed("Sprawlrunners Edges")
+  .addInputCompendium("sprawl-core-rules.sprawlrunner-edges")
+  .addInputCompendium("swade-core-rules.swade-edges")
+    .addItemNameFilter("Arcane Background (Gifted)")  
+    .addItemNameFilter("Arcane Background (Magic)")  
+    .addItemNameFilter("Arcane Background (Miracles)")  
+    .addItemNameFilter("Arcane Background (Psionics)")  
+    .addItemNameFilter("Arcane Background (Weird Science)")  
+    .addItemNameFilter("Aristocrat")  
+    .addItemNameFilter("Rich")
+    .addItemNameFilter("Filthy Rich")
+    .addItemNameFilter("Artificer")
+    .addItemNameFilter("Channeling")
+    .addItemNameFilter("Concentration")
+    .addItemNameFilter("Extra Effort")
+    .addItemNameFilter("Gadgeteer")
+    .addItemNameFilter("Holy/Unholy Warrior")
+    .addItemNameFilter("Improved Rapid Recharge")
+    .addItemNameFilter("Mentalist")
+    .addItemNameFilter("Power Points")
+    .addItemNameFilter("Power Surge")
+    .addItemNameFilter("Rapid Recharge")
+    .addItemNameFilter("Soul Drain")
+    .addItemNameFilter("Wizard")
+  .writeJournalPage();
 
 s.showReport();
 ```
