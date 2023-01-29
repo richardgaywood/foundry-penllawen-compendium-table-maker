@@ -1,44 +1,33 @@
-<div class="pl-summary-journals">
+{{#each folders}}
+  {{#if @key}}<h3>{{@key}}</h3>{{/if}}
+
+  <div class="pl-summary-journals">
     <table class="table summary-table">
-        <tbody>
-        {{#each folders}}
-            {{#if @key}}
-                <tr><td colspan=6 class="rowheading">{{@key}}</td></tr>
-                <tr>
-                    <th>{{ localize "SWADE.Name" }}</th>
-                    <th>{{ localize "SWADE.Rank" }}</th>
-                    <th>{{ localize "SWADE.PP" }}</th>
-                    <th>{{ localize "SWADE.Rng" }}</th>
-                    <th>{{ localize "SWADE.Dur" }}</th>
-                    <th>{{ localize "SWADE.Dmg" }}</th>
-                </tr>
-            {{else}}
-                <tr>
-                    <th>{{ localize "SWADE.Name" }}</th>
-                    <th>{{ localize "SWADE.Rank" }}</th>
-                    <th>{{ localize "SWADE.PP" }}</th>
-                    <th>{{ localize "SWADE.Rng" }}</th>
-                    <th>{{ localize "SWADE.Dur" }}</th>
-                    <th>{{ localize "SWADE.Dmg" }}</th>
-                </tr>
-            {{/if}}      
-            {{#each this}}
-                <tr>
-                    <td class="hasPopup">
-                        @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}
-                        <div class="popup">{{{popupText}}}
-                            <p class="compendiumSource">Source: {{compendiumLabel}}</p>
-                        </div>
-                    </td>
-                    <td class="centered">{{system.rank}}</td><!-- TODO: localise? -->
-                    <td class="centered">{{system.pp}}</td>
-                    <td class="centered">{{system.range}}</td>
-                    <td class="centered">{{system.duration}}</td>
-                    <td class="centered">{{PCTMValueOrEmDash system.damage}}</td>
-                    </td>
-                </tr>
-            {{/each}}    
+      <tbody>
+        <tr>
+          <th>{{localize "SWADE.Name"}}</th>
+          <th>{{localize "SWADE.Rank"}}</th>
+          <th>{{localize "SWADE.PP"}}</th>
+          <th>{{localize "SWADE.Rng"}}</th>
+          <th>{{localize "SWADE.Dur"}}</th>
+          <th>{{localize "SWADE.Dmg"}}</th>
+        </tr>
+        {{#each this}}
+          <tr>
+            <td class="hasPopup">
+              @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}
+              <div class="popup">{{{popupText}}}
+                <p class="compendiumSource">Source: {{compendiumLabel}}</p>
+              </div>
+            </td>
+            <td class="centered">{{system.rank}}</td><!-- TODO: localise? -->
+            <td class="centered">{{system.pp}}</td>
+            <td class="centered">{{system.range}}</td>
+            <td class="centered">{{system.duration}}</td>
+            <td class="centered">{{PCTMValueOrEmDash system.damage}}</td>
+          </tr>
         {{/each}}
-        </tbody>
+      </tbody>
     </table>
-</div>
+  </div>
+{{/each}}

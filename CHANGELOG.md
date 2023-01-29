@@ -1,5 +1,9 @@
 ## V1.0 releases
 
+### v1.1.0 (2023-xx-xx)
+
+* Fix missing item details in popup/hover text box (thanks Nolt!)
+
 ### v1.0.0 (2023-01-27)
 
 The "I can't believe it's not dead" release.

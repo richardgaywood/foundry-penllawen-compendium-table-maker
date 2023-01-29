@@ -1,55 +1,42 @@
+{{#each folders}}
+  {{#if @key}}<h3>{{@key}}</h3>{{/if}}
 
-<div class="pl-summary-journals">
+  <div class="pl-summary-journals">
     <table class="table summary-table">
-        <tbody>
-        {{#each folders}}
-
-            {{#if @key}}
-                <tr><td colspan=9 class="rowheading">{{@key}}</td></tr>
-                <tr>
-                    <th>{{ localize "SWADE.Name" }}</th>
-                    <th>{{ localize "SWADE.Dmg" }}</th>
-                    <th>{{ localize "SWADE.Range._name" }}</th>
-                    <th>{{ localize "SWADE.Parry" }}</th>
-                    <th>{{ localize "SWADE.Ap" }}</th>
-                    <th>{{ localize "SWADE.RoF" }}</th>
-                    <th>{{ localize "SWADE.Weight" }}</th>
-                    <th>{{ localize "SWADE.MinStrShort" }}</th>
-                    <th>{{ localize "SWADE.Price" }}</th>
-                </tr>
-            {{else}}                    
-                <tr>
-                    <th>{{ localize "SWADE.Name" }}</th>
-                    <th>{{ localize "SWADE.Dmg" }}</th>
-                    <th>{{ localize "SWADE.Range._name" }}</th>
-                    <th>{{ localize "SWADE.Parry" }}</th>
-                    <th>{{ localize "SWADE.Ap" }}</th>
-                    <th>{{ localize "SWADE.RoF" }}</th>
-                    <th>{{ localize "SWADE.Weight" }}</th>
-                    <th>{{ localize "SWADE.MinStrShort" }}</th>
-                    <th>{{ localize "SWADE.Price" }}</th>
-                </tr>
-            {{/if}}  
-
-            {{#each this}}
-                <tr>
-                    <td class="hasPopup">
-                        @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}
-                        <div class="popup">{{{popupText}}}
-                            <p class="compendiumSource">Source: {{compendiumLabel}}</p>
-                        </div>
-                    </td>
-                    <td class="centered">{{ PCTMValueOrEmDash system.damage}}</td>
-                    <td class="centered">{{ PCTMValueOrEmDash system.range}}</td>
-                    <td class="centered">{{ PCTMValueOrEmDashWithLeadingSign system.parry}}</td>
-                    <td class="centered">{{ PCTMValueOrEmDash system.ap }}</td>
-                    <td class="centered">{{ PCTMValueOrEmDash system.rof}}</td>
-                    <td class="centered">{{system.weight}}</td>
-                    <td class="centered">{{system.minStr}}</td>
-                    <td class="centered">{{system.price}}</td>
-                </tr>
-            {{/each}}
+      <tbody>
+        <tr>
+          <th>{{localize "SWADE.Name"}}</th>
+          <th>{{localize "SWADE.Dmg"}}</th>
+          <th>{{localize "SWADE.Range._name"}}</th>
+          <th>{{localize "SWADE.Parry"}}</th>
+          <th>{{localize "SWADE.Ap"}}</th>
+          <th>{{localize "SWADE.RoF"}}</th>
+          <th>{{localize "SWADE.Weight"}}</th>
+          <th>{{localize "SWADE.MinStrShort"}}</th>
+          <th>{{localize "SWADE.Price"}}</th>
+        </tr>
+        {{#each this}}
+          <tr>
+            <td class="hasPopup">
+              @Compendium[{{metadata_id}}.{{ogId}}]{
+              {{~name~}}}
+              <div class="popup">{{{popupText}}}
+                <p class="compendiumSource">Source: {{compendiumLabel}}</p>
+              </div>
+            </td>
+            <td class="centered">{{PCTMValueOrEmDash system.damage}}</td>
+            <td class="centered">{{PCTMValueOrEmDash system.range}}</td>
+            <td class="centered">{{PCTMValueOrEmDashWithLeadingSign
+                system.parry
+              }}</td>
+            <td class="centered">{{PCTMValueOrEmDash system.ap}}</td>
+            <td class="centered">{{PCTMValueOrEmDash system.rof}}</td>
+            <td class="centered">{{system.weight}}</td>
+            <td class="centered">{{system.minStr}}</td>
+            <td class="centered">{{system.price}}</td>
+          </tr>
         {{/each}}
-        </tbody>
+      </tbody>
     </table>
-</div>
+  </div>
+{{/each}}

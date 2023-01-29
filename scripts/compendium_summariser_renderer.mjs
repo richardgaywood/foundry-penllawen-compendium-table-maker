@@ -9,12 +9,13 @@ export default class CompendiumSummariserRenderer {
 
     async write(config, buildReport) {
         // An internal structure storing the names of all the Compendium Folders, if there are any.
-        this.compendiumFolderNames = new Map();
+        // this.compendiumFolderNames = new Map();
+
         // TODO: putting these in class-scoped fields feels crappy. Maybe pass them around instead.
         this.config = config;
         this.buildReport = buildReport;
 
-        await this.#getCompendiumFolderData();
+        // await this.#getCompendiumFolderData();
 
         this.buildReport.addHeading("PCTM.BuildReportTitle", {title: config.journalPageName})
 
@@ -57,9 +58,15 @@ export default class CompendiumSummariserRenderer {
                 item.ogId = ogItem.id;
 
                 var folderName = "";
-                if (this.compendiumFolderNames.has(item.ogId)) {
-                    folderName = this.compendiumFolderNames.get(item.ogId);
-                } 
+                // Sort items in the output journal by their defined SWADE category name.
+                if (item.system.category) {
+                    // console.log(item.system.category, item);
+                    folderName = item.system.category;
+                }
+                // if (this.compendiumFolderNames.has(item.ogId)) {
+                //     folderName = this.compendiumFolderNames.get(item.ogId);
+                // } 
+
                 // strip all HTML out of the description as it's going to be shown in a
                 // hover box with no formatting.
                 // TODO this is shite, fix.
@@ -71,6 +78,7 @@ export default class CompendiumSummariserRenderer {
                     item.popupText = item.system.description;
                     item.popupText = item.popupText.replace(/<.?div.*?>/gi, "");  
                     item.popupText = item.popupText.replace(/<.?span.*?>/gi, "");  
+                    item.popupText = item.popupText.replace(/<.?h[1-9]>/gi, "");  
                 }
                 
                 allItemsByTypeAndFolder.push(type, folderName, item);
@@ -88,7 +96,6 @@ export default class CompendiumSummariserRenderer {
 
         var newContent = "";
         for (const type of allItemsByTypeAndFolder.getOuterKeys()) {
-
             if (config.debug)
                 console.log(`Items for '${type}'`, allItemsByTypeAndFolder.getInnerMap(type));
 
@@ -121,18 +128,20 @@ export default class CompendiumSummariserRenderer {
         } else {
             ui.notifications.error(game.i18n.format("PCTM.ErrorNoOutput"));
         }
-
     }    
 
-    async #renderContentForOneItemType(type, itemsByFolder) {
-        for (const folder of itemsByFolder.keys()) {
-            itemsByFolder.get(folder).sort(function(a, b) {
+    async #renderContentForOneItemType(type, itemsByCategory) {
+        for (const category of itemsByCategory.keys()) {
+            itemsByCategory.get(category).sort(function(a, b) {
                 return a.name.localeCompare(b.name);
             });    
         }
+        if (this.config.debug)
+            console.log("itemsByCategory in #renderContentForOneItemType", itemsByCategory);
+
         return renderTemplate(
             `modules/${MODULE_NAME}/templates/${game.system.id}/${type}_table.hbs`, 
-            { folders: Object.fromEntries(itemsByFolder) }
+            { folders: Object.fromEntries(itemsByCategory) }
         );
     }
 

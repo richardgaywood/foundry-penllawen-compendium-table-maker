@@ -1,34 +1,28 @@
-<div class="pl-summary-journals">
-    <table class="table summary-table">
-        <tbody>
-        {{#each folders}}
-            {{#if @key}}
-                <tr><td colspan=3 class="rowheading">{{@key}}</td></tr>
-                <tr>
-                    <th>{{ localize "SWADE.Name" }}</th>
-                    <th>{{ localize "SWADE.LinkAttr" }}</th>
-                </tr>
-            {{else}}
-                <tr>
-                    <th>{{ localize "SWADE.Name" }}</th>
-                    <th>{{ localize "SWADE.LinkAttr" }}</th>
-                </tr>
-            {{/if}}      
-            {{#each this}}
-                <tr>
-                    <td class="hasPopup">
-                        @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}
-                        <div class="popup">{{{popupText}}}
-                            <p class="compendiumSource">Source: {{compendiumLabel}}</p>
-                        </div>
-                    </td>
-                    <td class="centered">
-                        {{ localizeSkillAttribute system.attribute useShorthand=false }}
-                    </td>
-                </tr>
-            {{/each}}
-        {{/each}}            
-        </tbody>
-    </table>
-</div>
+{{#each folders}}
+  {{#if @key}}<h3>{{@key}}</h3>{{/if}}
 
+  <div class="pl-summary-journals">
+    <table class="table summary-table">
+      <tbody>
+        <tr>
+          <th>{{localize "SWADE.Name"}}</th>
+          <th>{{localize "SWADE.LinkAttr"}}</th>
+        </tr>
+        {{#each this}}
+          <tr>
+            <td class="hasPopup">
+              @Compendium[{{metadata_id}}.{{ogId}}]{
+              {{~name~}}}
+              <div class="popup">{{{popupText}}}
+                <p class="compendiumSource">Source: {{compendiumLabel}}</p>
+              </div>
+            </td>
+            <td class="centered">
+              {{localizeSkillAttribute system.attribute useShorthand=false}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{/each}}
