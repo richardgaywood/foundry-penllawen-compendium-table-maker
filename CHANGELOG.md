@@ -3,6 +3,7 @@
 ### v1.1.0 (2023-xx-xx)
 
 * Fix missing item details in popup/hover text box (thanks Nolt!)
+* Add support for sorting & grouping contents by SWADE's "category" item field
 
 ### v1.0.0 (2023-01-27)
 
