@@ -1,9 +1,9 @@
 ## V1.0 releases
 
-### v1.1.0 (2023-xx-xx)
+### v1.1.0 (2023-01-29)
 
 * Fix missing item details in popup/hover text box (thanks Nolt!)
-* Add support for sorting & grouping contents by SWADE's "category" item field
+* Add support for sorting & grouping contents by SWADE's "category" item field (thanks for the suggestion Nolt!)
 
 ### v1.0.0 (2023-01-27)
 
