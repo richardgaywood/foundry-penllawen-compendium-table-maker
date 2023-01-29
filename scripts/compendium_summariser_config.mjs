@@ -17,10 +17,7 @@ export default class CompendiumSummariserConfig {
 
         // All compendiums being read as input.
         this.compendiums = [];
-
-        // If set, we will not group output by the name of the Compendium Folder used
-        this.ignoreCompendiumFolderGrouping = false;
-
+        
         // The name of the journal page we are going to create and then write to.
         this.journalPageName = "";
 

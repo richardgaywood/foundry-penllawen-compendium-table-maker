@@ -8,14 +8,9 @@ export default class CompendiumSummariserRenderer {
     }
 
     async write(config, buildReport) {
-        // An internal structure storing the names of all the Compendium Folders, if there are any.
-        // this.compendiumFolderNames = new Map();
-
         // TODO: putting these in class-scoped fields feels crappy. Maybe pass them around instead.
         this.config = config;
         this.buildReport = buildReport;
-
-        // await this.#getCompendiumFolderData();
 
         this.buildReport.addHeading("PCTM.BuildReportTitle", {title: config.journalPageName})
 
@@ -63,9 +58,6 @@ export default class CompendiumSummariserRenderer {
                     // console.log(item.system.category, item);
                     folderName = item.system.category;
                 }
-                // if (this.compendiumFolderNames.has(item.ogId)) {
-                //     folderName = this.compendiumFolderNames.get(item.ogId);
-                // } 
 
                 // strip all HTML out of the description as it's going to be shown in a
                 // hover box with no formatting.
@@ -144,48 +136,4 @@ export default class CompendiumSummariserRenderer {
             { folders: Object.fromEntries(itemsByCategory) }
         );
     }
-
-    /** Create a map of item.id to CompendiumFolders folder name, if it exists. */
-    async #getCompendiumFolderData() {
-        // This code is currently (very) broken; for now, I am going to ignore CompendiumFolders support.
-        return;
-
-    //     if (game.CF === undefined) { 
-    //         if (this.config.debug) { console.log("CF not detected"); }
-    //         return; 
-    //     }
-    //     if (this.config.ignoreCompendiumFolderGrouping) { 
-    //         if (this.config.debug) { console.log("ignoring CF"); }
-    //         return; 
-    //     }
-
-    //     for(const compendium of this.config.compendiums) {
-    //         const packCode = `${compendium.metadata.packageName}.${compendium.metadata.name}`;
-
-    //         const cfolders = await game.CF.FICFolderAPI.loadFolders(packCode);
-    //         const allEntries = await game.packs.get(packCode).getIndex({fields:["name","flags.cf"]});
-    //         const nonFolders = allEntries.filter(x => x.name != game.CF.TEMP_ENTITY_NAME);
-
-    //         if (this.config.debug) {
-    //             console.log("getCompendiumFolderData allEntries", allEntries);
-    //             console.log("getCompendiumFolderData nonFolders", nonFolders);
-    //         }
-
-    //         console.log("nonFolders", nonFolders);
-
-
-    //         for (const doc of nonFolders) {
-    //             if (doc.flags === null || doc.flags.cf === null) { continue; }
-    //             // NB: doc.flags is gone in Foundry V10, I do not know where
-    //             // CF now puts the folder metadata -- it doesn't appear to have
-    //             // an API to read that, and I am reluctant to tightly bind to its
-    //             // internal private code.
-    //             const folderId = doc.flags.cf.id; 
-    //             if (folderId) {
-    //                 this.compendiumFolderNames.set(doc._id, cfolders.get(folderId).name);
-    //             }
-    //         }                
-    //     }
-    }
-
 }
