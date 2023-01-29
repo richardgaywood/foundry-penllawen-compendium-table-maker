@@ -71,11 +71,6 @@ export default class CompendiumSummariser {
         return this;
     }
 
-    disableCompendiumFolderGrouping() {
-        this.config.ignoreCompendiumFolderGrouping = true;
-        return this;
-    }
-
     async writeJournalPage() {
         // Catch-all toggle for when something has already gone wrong; the report
         // should show what.
@@ -96,17 +91,8 @@ export default class CompendiumSummariser {
     }
 
     /* Old API methods, only kept to warn users. */
-    createOutputJournalNamed(journalName) {
-        ui.notifications.error(game.i18n.format("PCTM.OldApi"));
-    }
-
-    /* Old API methods, only kept to warn users. */
-    overwriteJournalWithID(journalId) {
-        ui.notifications.error(game.i18n.format("PCTM.OldApi"));
-    }
-
-    /* Old API methods, only kept to warn users. */
-    async write() {
-        ui.notifications.error(game.i18n.format("PCTM.OldApi"));
-    }
+    disableCompendiumFolderGrouping() { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
+    createOutputJournalNamed(journalName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
+    overwriteJournalWithID(journalId) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
+    async write() { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
 }
