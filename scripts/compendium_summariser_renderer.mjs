@@ -64,11 +64,11 @@ export default class CompendiumSummariserRenderer {
                 // hover box with no formatting.
                 // TODO this is shite, fix.
                 // TODO also it barfs when it's passed things that aren't items
-                if (item.system.data !== undefined) {
-                    item.plainTextDescription = item.system.data.description
+                if (item.system !== undefined) {
+                    item.plainTextDescription = item.system.description
                             .replace(/(<([^>]+)>)/gi, "");
 
-                    item.popupText = item.system.data.description;
+                    item.popupText = item.system.description;
                     item.popupText = item.popupText.replace(/<.?div.*?>/gi, "");  
                     item.popupText = item.popupText.replace(/<.?span.*?>/gi, "");  
                 }
