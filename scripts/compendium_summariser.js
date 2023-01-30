@@ -19,9 +19,6 @@ export default class CompendiumSummariser {
         const foo = await JournalEntry.create([{name: journalName}]);
         this.config.outputJournalId = foo[0].id;
 
-        console.log("foo", foo);
-        console.log("this.config.outputJournalId", this.config.outputJournalId);
-
         // NB: do not `return this`, this is not part of the Fluent API.
     }     
 
