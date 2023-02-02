@@ -1,5 +1,5 @@
-{{#each folders}}
-  {{#if @key}}<h3>{{@key}}</h3>{{/if}}
+{{#each itemsByCategory}}
+  {{#if this.name}}<h3>{{this.name}}</h3>{{/if}}
 
   <div class="pl-summary-journals">
     <table class="table summary-table">
@@ -8,7 +8,7 @@
           <th>{{localize "SWADE.Name"}}</th>
           <th>{{localize "SWADE.Req"}}</th>
         </tr>
-        {{#each this}}
+        {{#each this.value}}
           <tr>
             <td class="hasPopup">
               @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}

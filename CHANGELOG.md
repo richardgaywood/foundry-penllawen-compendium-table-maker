@@ -1,4 +1,13 @@
+## Future TODO
+* [x] Hovers/popups are broken [Nolt]
+* [x] Sort by SWADE item category [Nolt]
+* [ ] Include/exclude by categories [Nolt]
+* [x] Sort categories [Nolt]
+
 ## V1.0 releases
+
+### v1.?.? (2023-02-??)
+* Fix sorting of categories, which was broken (thanks Nolt!)
 
 ### v1.1.0 (2023-01-29)
 

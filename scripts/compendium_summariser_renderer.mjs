@@ -123,17 +123,19 @@ export default class CompendiumSummariserRenderer {
     }    
 
     async #renderContentForOneItemType(type, itemsByCategory) {
-        for (const category of itemsByCategory.keys()) {
-            itemsByCategory.get(category).sort(function(a, b) {
-                return a.name.localeCompare(b.name);
-            });    
+        // convert Map-of-Lists to List-of-Lists, so we can preserve ordering inside the hbs
+        const sortedList = Array.from(itemsByCategory).map(([name, value]) => ({name, value}));
+        // Then sort the category names themselves...
+        sortedList.sort(function(a, b) { return a.name.localeCompare(b.name); });    
+        // ...then sort the items within each category.
+        for (const itemList of sortedList) {
+            itemList.value.sort(function(a, b) { return a.name.localeCompare(b.name); });    
         }
-        if (this.config.debug)
-            console.log("itemsByCategory in #renderContentForOneItemType", itemsByCategory);
 
         return renderTemplate(
-            `modules/${MODULE_NAME}/templates/${game.system.id}/${type}_table.hbs`, 
-            { folders: Object.fromEntries(itemsByCategory) }
+            `modules/${MODULE_NAME}/templates/${game.system.id}/${type}_table.hbs`, {
+                itemsByCategory: sortedList 
+            }
         );
     }
 }
