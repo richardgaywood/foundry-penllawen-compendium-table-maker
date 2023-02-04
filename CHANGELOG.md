@@ -1,12 +1,8 @@
-## Future TODO
-* [x] Hovers/popups are broken [Nolt]
-* [x] Sort by SWADE item category [Nolt]
+## Future TODOs on my radar
 * [ ] Include/exclude by categories [Nolt]
-* [x] Sort categories [Nolt]
+* [ ] (stretch) Compendiums of Actors -> statblocks
 
-## V1.0 releases
-
-### v1.?.? (2023-02-??)
+### v1.1.1 (2023-02-04)
 * Fix sorting of categories, which was broken (thanks Nolt!)
 
 ### v1.1.0 (2023-01-29)
@@ -25,8 +21,6 @@ The "I can't believe it's not dead" release.
 * Fixed a bug where compendiums in the world (as opposed to in a module) would have the incorrect path generated, resulting in broken links in the generated journal
 * Added support for SWADE's new (well, new-ish) "consumable" item type
 * Removed the example macros compendium (which I suspect just cluttered up everyone's worlds), and moved the example macros into the README file instead (which also means I only need to keep one copy up to date when I change the module.)
-
-## Beta releases
 
 ### v0.0.5 (2022-05-07)
 
