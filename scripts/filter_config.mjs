@@ -4,7 +4,6 @@
  * each category, a list of 'things'.
  */
 export default class FilterConfig {
-
     constructor() {
         this.filterData = new Map();
         this.packageName = "";
@@ -15,10 +14,10 @@ export default class FilterConfig {
     }
 
     addFilterThingToCurrentCategory(thing) {
-        if (!this.filterData.has(this.package)) {
-            this.filterData.set(this.package, []);
+        if (!this.filterData.has(this.packageName)) {
+            this.filterData.set(this.packageName, []);
         }         
-        this.filterData.get(this.package).push(thing);
+        this.filterData.get(this.packageName).push(thing);
     }
 
     shouldFilter(packageName, thing) {

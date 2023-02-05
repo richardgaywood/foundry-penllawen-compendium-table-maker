@@ -46,8 +46,6 @@ await s.addJournalPageNamed("Gear")
 await s.addJournalPageNamed("Skills")
   .addInputCompendium("swade-core-rules.swade-skills")
   .writeJournalPage();
-
-s.showReport();
 ```
 
 This will compile the SWADE core rules compendium of all Edges and Gear items into a single JournalEntry with two pages, one for each. Obviously, you can change the name of the output journal and pages, and the input Compendium as you please. Note that you need the full "pack name" of the Compendium, in other words `swade-core-rules.swade-edges` and not just `swade-edges`. 
@@ -70,8 +68,6 @@ await s.addJournalPageNamed("Deadlands Edges")
   .addInputCompendium("deadlands-core-rules.deadlands-edges")
   .addInputCompendium("swade-core-rules.swade-edges")
   .writeJournalPage();  
-
-s.showReport();
 ```
 
 You can add as many as you'd like of these. This is a great way to combine the items from core SWADE with the items from a setting like Deadlands.
@@ -139,8 +135,6 @@ await s.addJournalPageNamed("Sprawlrunners Edges")
     .addItemNameFilter("Soul Drain")
     .addItemNameFilter("Wizard")
   .writeJournalPage();
-
-s.showReport();
 ```
 
 **Important Note**: The item name filtering is currently _case sensitive_. So if your item in Foundry is called "Filthy Rich" but you write "filthy rich" or even "Filthy rich" in your macro, it _will not filter successfully_. If in doubt, copy/paste the name directly from the item.
@@ -163,8 +157,6 @@ await s.addJournalPageNamed("Houserule ammo & gear")
   .addInputCompendium("penllawen-sprawlrunners-extras.weapons")
       .addTypeNameFilter("weapons")
   .writeJournalPage();
-
-s.showReport();
 ```
 
 Now I will get one Journal with two pages. One will contain only the weapons, the other only the gear.
@@ -177,7 +169,6 @@ var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSu
 await s.makeNewJournalNamed("Deadlands stuff");
 
 await s.addJournalPageNamed("Deadlands Edges")
-  .addInputCompendium("deadlands-core-rules.deadlands-edges")
   .addInputCompendium("swade-core-rules.swade-edges")
     .addItemNameFilter("Arcane Background (Gifted)")  
     .addItemNameFilter("Arcane Background (Magic)")  
@@ -185,6 +176,13 @@ await s.addJournalPageNamed("Deadlands Edges")
     .addItemNameFilter("Arcane Background (Psionics)")  
     .addItemNameFilter("Arcane Background (Weird Science)")  
     .addItemNameFilter("Soul Drain")  
+  .addInputCompendium("deadlands-core-rules.deadlands-edges")
+    .addCategoryRenamer("Background Edge", "Background")
+    .addCategoryRenamer("Combat Edge", "Combat")
+    .addCategoryRenamer("Legendary Edge", "Legendary")
+    .addCategoryRenamer("Professional Edge", "Professional")
+    .addCategoryRenamer("Social Edge", "Social")
+    .addCategoryRenamer("Weird Edge", "Weird ")
   .writeJournalPage();
 
 await s.addJournalPageNamed("Deadlands Hindrances")

@@ -22,8 +22,8 @@ export default class CompendiumSummariserConfig {
         this.journalPageName = "";
 
         // Two internal structures holding the names of all types and items to filter out.
-        this.typeNameFilters = new FilterConfig();
-        this.itemNameFilters = new FilterConfig();
+        this.typeNameFilters = new FilterConfig(this);
+        this.itemNameFilters = new FilterConfig(this);
 
         // Used to rename SWADE's categories as they are processed
         this.categoryRenames = new Map();
