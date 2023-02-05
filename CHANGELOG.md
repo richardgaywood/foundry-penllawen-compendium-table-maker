@@ -2,6 +2,9 @@
 * [ ] Include/exclude by categories [Nolt]
 * [ ] (stretch) Compendiums of Actors -> statblocks
 
+### v1.2.0 (2023-02-?>)
+* Add the ability to rename categories (allows you fix merges across Compendiums; see README.md)
+
 ### v1.1.1 (2023-02-04)
 * Fix sorting of categories, which was broken (thanks Nolt!)
 

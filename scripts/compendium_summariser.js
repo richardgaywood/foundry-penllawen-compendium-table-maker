@@ -47,14 +47,19 @@ export default class CompendiumSummariser {
         }
         
         this.config.compendiums.push(compendium);
-        this.config.typeNameFilters.setCurrentCategory(compendium.metadata.name);
-        this.config.itemNameFilters.setCurrentCategory(compendium.metadata.name);
+        this.config.typeNameFilters.setCurrentPackage(compendium.metadata.id);
+        this.config.itemNameFilters.setCurrentPackage(compendium.metadata.id);
 
         return this;
     }
 
     addJournalPageNamed(journalPageName) {
         this.config.journalPageName = journalPageName;
+        return this;
+    }
+
+    addCategoryRenamer(oldName, newName) {
+        this.config.categoryRenames.set(oldName, newName);
         return this;
     }
 

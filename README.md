@@ -76,6 +76,26 @@ s.showReport();
 
 You can add as many as you'd like of these. This is a great way to combine the items from core SWADE with the items from a setting like Deadlands.
 
+## Renaming categories
+
+You might want to change the names of categories in one of two Compendiums you are merging. For example, at the time of writing, the premium SWADE module has Edge categories of "Leadership", "Social", Combat", and so on. But the Deadlands module uses "Leadership Edge", "Social Edge", "Combat Edge" etc. This prevents the module from merging them.
+
+By adding a renamer as shown below to one of the Compendiums, you can make the merge process work again. Here the Deadlands category "Combat Edge" will be renamed to "Combat", and then it will correctly merge with the SWADE Edges in the "Combat" category.
+
+```
+await s.addJournalPageNamed("edges")
+  .enableDebug()
+  .addInputCompendium("swade-core-rules.swade-edges")
+  .addInputCompendium("deadlands-core-rules.deadlands-edges")
+    .addCategoryRenamer("Background Edge", "Background")
+    .addCategoryRenamer("Combat Edge", "Combat")
+    .addCategoryRenamer("Legendary Edge", "Legendary")
+    .addCategoryRenamer("Professional Edge", "Professional")
+    .addCategoryRenamer("Social Edge", "Social")
+    .addCategoryRenamer("Weird Edge", "Weird ")
+  .writeJournalPage();
+```
+
 ### Filtering items by name
 
 Sometimes you want to say "take all of the items in this compendium except a few special ones." For example, in the Sprawlrunners setting, quite a few Edges from the core book are not available. You can do this like so:

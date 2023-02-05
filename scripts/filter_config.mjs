@@ -7,26 +7,26 @@ export default class FilterConfig {
 
     constructor() {
         this.filterData = new Map();
-        this.currentCategory = "";
+        this.packageName = "";
     }
 
-    setCurrentCategory(category) {
-        this.currentCategory = category;
+    setCurrentPackage(packageName) {
+        this.packageName = packageName;
     }
 
     addFilterThingToCurrentCategory(thing) {
-        if (!this.filterData.has(this.currentCategory)) {
-            this.filterData.set(this.currentCategory, []);
+        if (!this.filterData.has(this.package)) {
+            this.filterData.set(this.package, []);
         }         
-        this.filterData.get(this.currentCategory).push(thing);
+        this.filterData.get(this.package).push(thing);
     }
 
-    shouldFilter(category, thing) {
+    shouldFilter(packageName, thing) {
         // TODO: should this be case insensitive?
-        if (!this.filterData.has(category)) {
+        if (!this.filterData.has(packageName)) {
             return false;
         }
-        if (this.filterData.get(category).includes(thing)) {
+        if (this.filterData.get(packageName).includes(thing)) {
             return true;
         }
         return false;

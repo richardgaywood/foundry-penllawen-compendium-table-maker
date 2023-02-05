@@ -28,14 +28,14 @@ export default class CompendiumSummariserRenderer {
 
                 if (item.documentName !== "Item") { continue; }
                 if (item.name === game.CF.TEMP_ENTITY_NAME) { continue; }
-                if (config.itemNameFilters.shouldFilter(compendium.metadata.name, item.name)) { 
+                if (config.itemNameFilters.shouldFilter(compendium.metadata.id, item.name)) { 
                     buildReport.addEntry("PCTM.BuildReportFilterItem",
                         {itemName: item.name, 
                             compPackageName: compendium.metadata.packageName,
                             compName: compendium.metadata.name});
                     continue; 
                 }
-                if (config.typeNameFilters.shouldFilter(compendium.metadata.name, type)) { 
+                if (config.typeNameFilters.shouldFilter(compendium.metadata.id, type)) { 
                     itemCountFilteredByType++;
                     typesOfItemsFilteredByType.add(type);
                     continue; 
@@ -56,7 +56,11 @@ export default class CompendiumSummariserRenderer {
                 // Sort items in the output journal by their defined SWADE category name.
                 if (item.system.category) {
                     // console.log(item.system.category, item);
-                    folderName = item.system.category;
+                    if (config.categoryRenames.has(item.system.category)) {
+                        folderName = config.categoryRenames.get(item.system.category);
+                    } else {
+                        folderName = item.system.category;
+                    }
                 }
 
                 // strip all HTML out of the description as it's going to be shown in a
