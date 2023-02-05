@@ -82,9 +82,8 @@ You might want to change the names of categories in one of two Compendiums you a
 
 By adding a renamer as shown below to one of the Compendiums, you can make the merge process work again. Here the Deadlands category "Combat Edge" will be renamed to "Combat", and then it will correctly merge with the SWADE Edges in the "Combat" category.
 
-```
+```javascript
 await s.addJournalPageNamed("edges")
-  .enableDebug()
   .addInputCompendium("swade-core-rules.swade-edges")
   .addInputCompendium("deadlands-core-rules.deadlands-edges")
     .addCategoryRenamer("Background Edge", "Background")
@@ -93,6 +92,15 @@ await s.addJournalPageNamed("edges")
     .addCategoryRenamer("Professional Edge", "Professional")
     .addCategoryRenamer("Social Edge", "Social")
     .addCategoryRenamer("Weird Edge", "Weird ")
+  .writeJournalPage();
+```
+
+You can also use this to create a Skills list that doesn't break the core skills out into their own table:
+
+```javascript
+await s.addJournalPageNamed("Skills")
+  .addInputCompendium("swade-core-rules.swade-skills")
+        .addCategoryRenamer("core", "")
   .writeJournalPage();
 ```
 
