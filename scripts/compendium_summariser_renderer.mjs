@@ -19,6 +19,8 @@ export default class CompendiumSummariserRenderer {
         for (const compendium of config.compendiums) {
             var itemCountFilteredByType = 0;
             const typesOfItemsFilteredByType = new Set();
+            var itemCountFilteredByCategory = 0;
+            const typesOfItemsFilteredByCategory = new Set();            
 
             for (var itemIndex of compendium.index.values()) {
                 const ogItem =  await compendium.getDocument(itemIndex._id);
@@ -28,6 +30,8 @@ export default class CompendiumSummariserRenderer {
 
                 if (item.documentName !== "Item") { continue; }
                 if (item.name === game.CF.TEMP_ENTITY_NAME) { continue; }
+
+                // Check filters
                 if (config.itemNameFilters.shouldFilter(compendium.metadata.id, item.name)) { 
                     buildReport.addEntry("PCTM.BuildReportFilterItem",
                         {itemName: item.name, 
@@ -38,6 +42,11 @@ export default class CompendiumSummariserRenderer {
                 if (config.typeNameFilters.shouldFilter(compendium.metadata.id, type)) { 
                     itemCountFilteredByType++;
                     typesOfItemsFilteredByType.add(type);
+                    continue; 
+                }
+                if (config.categoryFilters.shouldFilter(compendium.metadata.id, item.system.category)) {
+                    itemCountFilteredByCategory++;
+                    typesOfItemsFilteredByCategory.add(type);
                     continue; 
                 }
 

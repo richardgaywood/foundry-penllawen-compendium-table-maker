@@ -1,9 +1,12 @@
 ## Future TODOs on my radar
 * [ ] Include/exclude by categories [Nolt]
+* [ ] Move itemCountFilteredByCategory (9)etc) into BuildReport class
 * [ ] (stretch) Compendiums of Actors -> statblocks
 
-### v1.2.0 (2023-02-?>)
+### v1.2.0 (2023-02-05)
 * Add the ability to rename categories (allows you fix merges across Compendiums; see README.md)
+* Fix some bugs with item name filtering & refresh the examples in the README
+* Add category filtering to remove whole groups of things from the Compendium (see README)
 
 ### v1.1.1 (2023-02-04)
 * Fix sorting of categories, which was broken (thanks Nolt!)

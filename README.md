@@ -72,7 +72,7 @@ await s.addJournalPageNamed("Deadlands Edges")
 
 You can add as many as you'd like of these. This is a great way to combine the items from core SWADE with the items from a setting like Deadlands.
 
-## Renaming categories
+### Renaming categories
 
 You might want to change the names of categories in one of two Compendiums you are merging. For example, at the time of writing, the premium SWADE module has Edge categories of "Leadership", "Social", Combat", and so on. But the Deadlands module uses "Leadership Edge", "Social Edge", "Combat Edge" etc. This prevents the module from merging them.
 
@@ -100,9 +100,31 @@ await s.addJournalPageNamed("Skills")
   .writeJournalPage();
 ```
 
+### Filtering items by category
+
+You might wish to remove an entire category of things from a given Compendium. For example, the code below will create a single Journal page with only the weapons from the core SWADE book used in a modern setting:
+
+```javascript
+await s.addJournalPageNamed("Modern SWADE weapons")
+  .enableDebug()
+  .addInputCompendium("swade-core-rules.swade-personal-weapons")
+    .addCategoryFilter("Blackpowder Weapons")
+    .addCategoryFilter("Melee Weapons, Futuristic")
+    .addCategoryFilter("Melee Weapons, Medieval")
+    .addCategoryFilter("Ranged Weapons, Medieval")
+  .addInputCompendium("swade-core-rules.swade-modern-firearms")
+    .addCategoryFilter("Lasers (Futuristic)")
+  .addInputCompendium("swade-core-rules.swade-special-weapons")
+    .addCategoryFilter("Cannons")
+    .addCategoryFilter("Catapults")
+  .writeJournalPage();
+```
+
+**Important Note**: The category name filtering is currently _case sensitive_. So if your item in Foundry is in a category called "Melee Weapons, Futuristic" but you write "melee weapons, futuristic", it _will not filter successfully_. If in doubt, copy/paste the name directly from the item.
+
 ### Filtering items by name
 
-Sometimes you want to say "take all of the items in this compendium except a few special ones." For example, in the Sprawlrunners setting, quite a few Edges from the core book are not available. You can do this like so:
+Sometimes you want to say "take all of the items in this compendium except a few specific ones." For example, in the Sprawlrunners setting, quite a few Edges from the core book are not available or replaced by customised versions specific to the setting. You can do this like so:
 
 ```javascript
 var s = game.modules.get("penllawen-compendium-table-maker")

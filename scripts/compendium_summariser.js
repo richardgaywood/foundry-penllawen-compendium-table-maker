@@ -49,6 +49,7 @@ export default class CompendiumSummariser {
         this.config.compendiums.push(compendium);
         this.config.typeNameFilters.setCurrentPackage(compendium.metadata.id);
         this.config.itemNameFilters.setCurrentPackage(compendium.metadata.id);
+        this.config.categoryFilters.setCurrentPackage(compendium.metadata.id);
 
         return this;
     }
@@ -70,6 +71,11 @@ export default class CompendiumSummariser {
 
     addItemNameFilter(itemName) {
         this.config.itemNameFilters.addFilterThingToCurrentCategory(itemName);
+        return this;
+    }
+
+    addCategoryFilter(categoryName) {
+        this.config.categoryFilters.addFilterThingToCurrentCategory(categoryName);
         return this;
     }
 
