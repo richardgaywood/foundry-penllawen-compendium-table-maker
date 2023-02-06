@@ -1,6 +1,5 @@
 ## Future TODOs on my radar
-* [ ] Include/exclude by categories [Nolt]
-* [ ] Move itemCountFilteredByCategory (9)etc) into BuildReport class
+* [ ] Move itemCountFilteredByCategory (etc) into BuildReport class
 * [ ] (stretch) Compendiums of Actors -> statblocks
 
 ### v1.2.0 (2023-02-05)
