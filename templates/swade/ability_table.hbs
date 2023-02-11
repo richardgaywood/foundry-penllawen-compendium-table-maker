@@ -1,0 +1,32 @@
+{{#each itemsByCategory}}
+  {{#if this.name}}<h3>{{this.name}}</h3>{{/if}}
+
+  <div class="pl-summary-journals">
+    <table class="table summary-table">
+      <tbody>
+        <tr>
+          <th>{{localize "SWADE.Name"}}</th>
+          <th>{{localize "SWADE.Subtype"}}</th>
+          <th>{{localize "SWADE.GrantsPowers"}}</th>
+        </tr>
+        {{#each this.value}}
+          <tr>
+            <td class="hasPopup">
+              @Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}
+              <div class="popup">{{{popupText}}}
+                <p class="compendiumSource">Source: {{compendiumLabel}}</p>
+              </div>
+            </td>
+            <td class="centered">{{extraData.translatedAbilitySubTypeName}}</td>
+            <td class="centered">
+              {{#if system.grantsPowers}}
+                {{localize "SWADE.GrantsPowers"}}
+              {{else}}&ndash;{{/if}}                
+            </td>
+
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{/each}}

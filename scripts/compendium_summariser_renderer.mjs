@@ -56,6 +56,10 @@ export default class CompendiumSummariserRenderer {
                 item.compendiumPackageName = compendium.metadata.packageName;
                 item.compendiumName = compendium.metadata.name;
                 item.compendiumLabel = compendium.metadata.label;
+                // This will be used to hold any random item-specific data I need in the
+                // template HBS file; one example is localised strings where I need some logic
+                // for the localisation.
+                item.extraData = {};
 
                 // In the templates, I'm going to build links to the original item,
                 // not this mutated clone. So copy the original ID over to the clone.
@@ -85,6 +89,9 @@ export default class CompendiumSummariserRenderer {
                     item.popupText = item.popupText.replace(/<.?span.*?>/gi, "");  
                     item.popupText = item.popupText.replace(/<.?h[1-9]>/gi, "");  
                 }
+
+                // Perform any per-system, per-item-type specific processing I need
+                this.#itemTypeSpecificProcessing(item);
                 
                 allItemsByTypeAndFolder.push(type, folderName, item);
             }
@@ -150,5 +157,34 @@ export default class CompendiumSummariserRenderer {
                 itemsByCategory: sortedList 
             }
         );
+    }
+
+    /** Some item types require tailored handling; do that here. */ 
+    // TODO: if this gets big, split it out into a helper class.
+    async #itemTypeSpecificProcessing(item) {
+        if (game.system.id === "swade" && item.type == "ability") {
+            // TODO: this might be a cleaner way:
+            // item.extraData.translatedAbilitySubTypeName = 
+            //     game.i18n.format(SWADE.abilitySheet[item.system.subtype].abilities);
+
+            // but I want to ship this feature NOW, so: it's a-hardcoding we will go!
+            switch(item.system.subtype) {
+                case "special":
+                    item.extraData.translatedAbilitySubTypeName = 
+                        game.i18n.format("SWADE.SpecialAbilities");
+                    break;
+                case "race":
+                    item.extraData.translatedAbilitySubTypeName = 
+                        game.i18n.format("SWADE.RacialAbilities");
+                    break;
+                case "archetype":
+                    item.extraData.translatedAbilitySubTypeName = 
+                        game.i18n.format("SWADE.ArchetypeAbilities");
+                    break;
+                default:
+                    item.extraData.translatedAbilitySubTypeName = 
+                        game.i18n.format("PCTM.ErrorUnknownAbilitySubtype");
+            }
+        }
     }
 }
