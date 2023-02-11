@@ -1,6 +1,6 @@
-## Future TODOs on my radar
-* [ ] Move itemCountFilteredByCategory (etc) into BuildReport class
-* [ ] (stretch) Compendiums of Actors -> statblocks
+### v1.3.0 (2023-02-11)
+
+* Add support for SWADE's "ability" item type, including racial, archetypal, and special abilities. (Thanks for the FR loofou!) [#3]
 
 ### v1.2.0 (2023-02-05)
 * Add the ability to rename categories (allows you fix merges across Compendiums; see README.md)
