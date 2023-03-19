@@ -80,7 +80,7 @@ export default class CompendiumSummariserRenderer {
                 // hover box with no formatting.
                 // TODO this is shite, fix.
                 // TODO also it barfs when it's passed things that aren't items
-                if (item.system !== undefined) {
+                if (item.system && item.system.description) {
                     item.plainTextDescription = item.system.description
                             .replace(/(<([^>]+)>)/gi, "");
 
@@ -88,6 +88,12 @@ export default class CompendiumSummariserRenderer {
                     item.popupText = item.popupText.replace(/<.?div.*?>/gi, "");  
                     item.popupText = item.popupText.replace(/<.?span.*?>/gi, "");  
                     item.popupText = item.popupText.replace(/<.?h[1-9]>/gi, "");  
+                } else {
+                    // https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/issues/6
+                    // it seems the text can be null sometimes -- although I cannot currently repro.
+                    // Let's null-check, just to be sure.
+                    item.plainTextDescription = "";
+                    item.popupText = "";
                 }
 
                 // Perform any per-system, per-item-type specific processing I need
