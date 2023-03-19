@@ -2,15 +2,17 @@
 
 'coz I always forget how.
 
-First in Github:
+First update the CHANGELOG.
 
-1. Releases | Draft a new release
-2. Choose a tag | Enter a new version number
-3. Publish release
+Then in Github:
+https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/releases/new
 
-Then in https://foundryvtt.com/admin/
+1. Choose a tag | Enter a new version number
+2. Publish release
 
-1. Package | <name of package> | scroll down to Versions
+Then in https://foundryvtt.com/admin/packages/package/2232/change/
+
+1. Scroll down to Versions
 2. Add a new version
 
 Manifest URL is for the version, like this but with the correct version tag in:
