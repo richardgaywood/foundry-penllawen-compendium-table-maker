@@ -1,3 +1,8 @@
+
+### v1.3.1 (2023-03-19)
+
+* Attempt to fix null-check issue when rendering items with no description field (see issue #6)
+
 ### v1.3.0 (2023-02-11)
 
 * Add support for SWADE's "ability" item type, including racial, archetypal, and special abilities. (Thanks for the FR loofou!) [#3]
