@@ -1,4 +1,8 @@
 
+### v1.4.0 (2023-0x-xx)
+
+* Switch to proper Foundry tooltips and remove my awful hacky CSS; much better UX.
+
 ### v1.3.1 (2023-03-19)
 
 * Attempt to fix null-check issue when rendering items with no description field (see issue #6)
