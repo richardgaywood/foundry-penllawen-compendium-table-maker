@@ -11,14 +11,8 @@
           <th>{{localize "SWADE.Quantity"}}</th>
         </tr>
         {{#each this.value}}
-          <tr>
-            <td class="hasPopup">
-              @Compendium[{{metadata_id}}.{{ogId}}]{
-              {{~name~}}}
-              <div class="popup">{{{popupText}}}
-                <p class="compendiumSource">Source: {{compendiumLabel}}</p>
-              </div>
-            </td>
+          <tr data-tooltip="{{~descriptionForTooltip~}}">
+            <td>@Compendium[{{metadata_id}}.{{ogId}}]{ {{~name~}}}</td>
             <td class="centered">{{system.weight}}</td>
             <td class="centered">{{system.price}}</td>
             <td class="centered">{{system.quantity}}</td>

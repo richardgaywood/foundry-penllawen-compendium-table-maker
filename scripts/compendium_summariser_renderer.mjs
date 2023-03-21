@@ -76,26 +76,25 @@ export default class CompendiumSummariserRenderer {
                     }
                 }
 
-                // strip all HTML out of the description as it's going to be shown in a
-                // hover box with no formatting.
-                // TODO this is shite, fix.
-                // TODO also it barfs when it's passed things that aren't items
+                item.descriptionForTooltip = 
+                    `<p><i>Source: ${compendium.metadata.label}</i></p>`;
+
                 if (item.system && item.system.description) {
-                    item.plainTextDescription = item.system.description
-                            .replace(/(<([^>]+)>)/gi, "");
+                    // I seem to need an extra await here, although it feels unnecessary.
+                    const enrichText = await TextEditor.enrichHTML(item.system.description, {async: true});
+                    // Note that this will be HTML-escaped in the handlebars template, so
+                    // no need to escape it here.
 
-                    item.popupText = item.system.description;
-                    item.popupText = item.popupText.replace(/<.?div.*?>/gi, "");  
-                    item.popupText = item.popupText.replace(/<.?span.*?>/gi, "");  
-                    item.popupText = item.popupText.replace(/<.?h[1-9]>/gi, "");  
-                } else {
-                    // https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker/issues/6
-                    // it seems the text can be null sometimes -- although I cannot currently repro.
-                    // Let's null-check, just to be sure.
-                    item.plainTextDescription = "";
-                    item.popupText = "";
-                }
+                    // Strip any CSS; it won't play well with Foundry's tooltip formatting. 
+                    const doc = new DOMParser().parseFromString(enrichText, "text/html");
+                    doc.querySelectorAll("*")
+                        .forEach((element) => {
+                            element.removeAttribute("class");
+                        });
 
+                    item.descriptionForTooltip = doc.body.innerHTML + item.descriptionForTooltip;
+                } 
+                
                 // Perform any per-system, per-item-type specific processing I need
                 this.#itemTypeSpecificProcessing(item);
                 
