@@ -1,8 +1,7 @@
-import FilterConfig from "./filter_config.mjs";
+import {FilterSet} from "./filter_config.mjs";
 
 /** Stores all config necessary to run the compendium summariser. */
 export default class CompendiumSummariserConfig {
-
     constructor() {
         this.resetConfig();
 
@@ -15,16 +14,15 @@ export default class CompendiumSummariserConfig {
     resetConfig() {
         this.debug = false;
 
-        // All compendiums being read as input.
+        // All compendiums being read as input. These are CompendiumCollection objects
+        // ie. Foundry's internal data structure.
         this.compendiums = [];
         
         // The name of the journal page we are going to create and then write to.
         this.journalPageName = "";
 
-        // Two internal structures holding the names of all types and items to filter out.
-        this.typeNameFilters = new FilterConfig(this);
-        this.itemNameFilters = new FilterConfig(this);
-        this.categoryFilters = new FilterConfig(this);
+        // Sets of filters that will be used to remove or keep items.
+        this.filters = new FilterSet(this);
 
         // Used to rename SWADE's categories as they are processed
         this.categoryRenames = new Map();

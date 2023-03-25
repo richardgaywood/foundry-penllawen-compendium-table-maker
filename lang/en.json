@@ -15,5 +15,6 @@
     "PCTM.ErrorMissingJournalID": "Could not find JournalEntry with ID '{id}'",
     "PCTM.ErrorNoOutput": "You must first call makeNewJournalNamed() and then addJournalPageNamed()",
     "PCTM.ErrorUnknownAbilitySubtype": "Unknown ability subtype - please file a bug",
-    "PCTM.OldApi": "You are using the Foundry v9 API for this module; please review the documentation and change your macro."
+    "PCTM.OldApi": "You are using an old API for Compendium summariser; please review the documentation and change your macro.",
+    "PCTM.FilterIncludeExcludeError": "You can't use a filter both as an exclude and include at the same time!"
 }

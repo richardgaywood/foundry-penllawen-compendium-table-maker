@@ -1,5 +1,6 @@
 import {MODULE_NAME} from "./init.js";
 import MapMapList from "./map_map_list.mjs";
+import {FilterSet} from "./filter_config.mjs";
 
 /** Actually generates the output & writes it to the journal entry */
 export default class CompendiumSummariserRenderer {
@@ -31,24 +32,42 @@ export default class CompendiumSummariserRenderer {
                 if (item.documentName !== "Item") { continue; }
                 if (item.name === game.CF.TEMP_ENTITY_NAME) { continue; }
 
-                // Check filters
-                if (config.itemNameFilters.shouldFilter(compendium.metadata.id, item.name)) { 
+                if (!(
+                    this.config.filters.filter(FilterSet.FILTER_ITEM_NAME, item.name, compendium.metadata.id)
+                    && this.config.filters.filter(FilterSet.FILTER_TYPE_NAME, type, compendium.metadata.id)
+                    && this.config.filters.filter(FilterSet.FILTER_CATEGORY_NAME, item.system.category, compendium.metadata.id)
+                    )) {
+                        
                     buildReport.addEntry("PCTM.BuildReportFilterItem",
                         {itemName: item.name, 
                             compPackageName: compendium.metadata.packageName,
                             compName: compendium.metadata.name});
                     continue; 
                 }
-                if (config.typeNameFilters.shouldFilter(compendium.metadata.id, type)) { 
-                    itemCountFilteredByType++;
-                    typesOfItemsFilteredByType.add(type);
-                    continue; 
-                }
-                if (config.categoryFilters.shouldFilter(compendium.metadata.id, item.system.category)) {
-                    itemCountFilteredByCategory++;
-                    typesOfItemsFilteredByCategory.add(type);
-                    continue; 
-                }
+            
+
+                // // Check filters
+                // // TODO: if I ditch the generation report, this could be collapsed down to a couple of
+                // // stream functions...
+                // if (!config.filters.get(FilterConfig.FILTER_ITEM_NAME).filter(compendium.metadata.id, item.name)) { 
+                //     buildReport.addEntry("PCTM.BuildReportFilterItem",
+                //         {itemName: item.name, 
+                //             compPackageName: compendium.metadata.packageName,
+                //             compName: compendium.metadata.name});
+                //     continue; 
+                // }
+                // if (!config.filters.get(FilterConfig.FILTER_TYPE_NAME).filter(compendium.metadata.id, type)) { 
+                //     itemCountFilteredByType++;
+                //     typesOfItemsFilteredByType.add(type);
+                //     continue; 
+                // }
+                // if (!config.filters.get(FilterConfig.FILTER_CATEGORY_NAME).filter(compendium.metadata.id, item.system.category)) {
+                //     itemCountFilteredByCategory++;
+                //     typesOfItemsFilteredByCategory.add(type);
+                //     continue; 
+                // }
+
+
 
                 // Tuck some metadata about the compendium this item came from into it
                 // so we can reference these in the table templates.
@@ -131,6 +150,7 @@ export default class CompendiumSummariserRenderer {
         // my current CSS implementation goes wonky if there's not enough room at the bottom of the
         // viewport to render the popup. I'm going to give it room by... just padding with some
         // whitespace.
+        // TODO: delete now I have proper tooltips
         newContent = newContent.concat('<p class="paddingGraf"></p>');
 
         if (config.outputJournalId && config.journalPageName) {

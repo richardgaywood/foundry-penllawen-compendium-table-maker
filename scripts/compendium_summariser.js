@@ -1,6 +1,7 @@
 import BuildReport from "./build_report.mjs";
 import CompendiumSummariserConfig from "./compendium_summariser_config.mjs";
 import CompendiumSummariserRenderer from "./compendium_summariser_renderer.mjs";
+import {FilterConfig, FilterSet} from "./filter_config.mjs";
 
 export default class CompendiumSummariser {
     constructor() {
@@ -47,9 +48,7 @@ export default class CompendiumSummariser {
         }
         
         this.config.compendiums.push(compendium);
-        this.config.typeNameFilters.setCurrentPackage(compendium.metadata.id);
-        this.config.itemNameFilters.setCurrentPackage(compendium.metadata.id);
-        this.config.categoryFilters.setCurrentPackage(compendium.metadata.id);
+        this.config.filters.setCurrentPackage(compendium.metadata.id);
 
         return this;
     }
@@ -64,20 +63,45 @@ export default class CompendiumSummariser {
         return this;
     }
 
-    addTypeNameFilter(typeName) {
-        this.config.typeNameFilters.addFilterThingToCurrentCategory(typeName);
+    includeItemType(typeName) {
+        this.config.filters.addFilterEntry(FilterSet.FILTER_TYPE_NAME, FilterConfig.POLARITY_INCLUDE, typeName);
+        return this;
+    }
+    excludeItemType(typeName) {
+        this.config.filters.addFilterEntry(FilterSet.FILTER_TYPE_NAME, FilterConfig.POLARITY_EXCLUDE, typeName);
         return this;
     }
 
-    addItemNameFilter(itemName) {
-        this.config.itemNameFilters.addFilterThingToCurrentCategory(itemName);
+    includeItemName(itemName) {
+        this.#setPolarity(FilterConfig.FILTER_ITEM_NAME, FilterConfig.POLARITY_INCLUDE);
+        this.config.filters.get(FilterConfig.FILTER_ITEM_NAME).addFilterThingToCurrentCategory(itemName);
+        return this;
+    }
+    excludeItemName(itemName) {
+        this.#setPolarity(FilterConfig.FILTER_ITEM_NAME, FilterConfig.POLARITY_EXCLUDE);
+        this.config.filters.get(FilterConfig.FILTER_ITEM_NAME).addFilterThingToCurrentCategory(itemName);
         return this;
     }
 
-    addCategoryFilter(categoryName) {
-        this.config.categoryFilters.addFilterThingToCurrentCategory(categoryName);
+    includeItemCategory(categoryName) {
+        this.#setPolarity(FilterConfig.FILTER_CATEGORY_NAME, FilterConfig.POLARITY_INCLUDE);
+        this.config.filters.get(FilterConfig.FILTER_CATEGORY_NAME).addFilterThingToCurrentCategory(categoryName);
         return this;
     }
+    excludeItemCategory(categoryName) {
+        this.#setPolarity(FilterConfig.FILTER_CATEGORY_NAME, FilterConfig.POLARITY_EXCLUDE);
+        this.config.filters.get(FilterConfig.FILTER_CATEGORY_NAME).addFilterThingToCurrentCategory(typeName);
+        return this;
+    }
+
+    #setPolarity(filterType, polarity) {
+        if (!this.config.filters.get(filterType).setMode(polarity)) {
+            ui.notifications.error(
+                game.i18n.format("PCTM.FilterIncludeExcludeError"));
+                this.failedValidate = true;
+        }
+    }
+
 
     async writeJournalPage() {
         // Catch-all toggle for when something has already gone wrong; the report
@@ -102,5 +126,9 @@ export default class CompendiumSummariser {
     disableCompendiumFolderGrouping() { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
     createOutputJournalNamed(journalName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
     overwriteJournalWithID(journalId) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
+    addTypeNameFilter(typeName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
+    addItemNameFilter(itemName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
+    addCategoryFilter(categoryName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
+
     async write() { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
 }
