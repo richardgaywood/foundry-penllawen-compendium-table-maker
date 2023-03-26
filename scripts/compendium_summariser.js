@@ -63,45 +63,32 @@ export default class CompendiumSummariser {
         return this;
     }
 
-    includeItemType(typeName) {
+    includeItemsByType(typeName) {
         this.config.filters.addFilterEntry(FilterSet.FILTER_TYPE_NAME, FilterConfig.POLARITY_INCLUDE, typeName);
         return this;
     }
-    excludeItemType(typeName) {
+    excludeItemsByType(typeName) {
         this.config.filters.addFilterEntry(FilterSet.FILTER_TYPE_NAME, FilterConfig.POLARITY_EXCLUDE, typeName);
         return this;
     }
 
-    includeItemName(itemName) {
-        this.#setPolarity(FilterConfig.FILTER_ITEM_NAME, FilterConfig.POLARITY_INCLUDE);
-        this.config.filters.get(FilterConfig.FILTER_ITEM_NAME).addFilterThingToCurrentCategory(itemName);
+    includeItemsByName(itemName) {
+        this.config.filters.addFilterEntry(FilterSet.FILTER_ITEM_NAME, FilterConfig.POLARITY_INCLUDE, itemName);
         return this;
     }
-    excludeItemName(itemName) {
-        this.#setPolarity(FilterConfig.FILTER_ITEM_NAME, FilterConfig.POLARITY_EXCLUDE);
-        this.config.filters.get(FilterConfig.FILTER_ITEM_NAME).addFilterThingToCurrentCategory(itemName);
-        return this;
-    }
-
-    includeItemCategory(categoryName) {
-        this.#setPolarity(FilterConfig.FILTER_CATEGORY_NAME, FilterConfig.POLARITY_INCLUDE);
-        this.config.filters.get(FilterConfig.FILTER_CATEGORY_NAME).addFilterThingToCurrentCategory(categoryName);
-        return this;
-    }
-    excludeItemCategory(categoryName) {
-        this.#setPolarity(FilterConfig.FILTER_CATEGORY_NAME, FilterConfig.POLARITY_EXCLUDE);
-        this.config.filters.get(FilterConfig.FILTER_CATEGORY_NAME).addFilterThingToCurrentCategory(typeName);
+    excludeItemsByName(itemName) {
+        this.config.filters.addFilterEntry(FilterSet.FILTER_ITEM_NAME, FilterConfig.POLARITY_EXCLUDE, itemName);
         return this;
     }
 
-    #setPolarity(filterType, polarity) {
-        if (!this.config.filters.get(filterType).setMode(polarity)) {
-            ui.notifications.error(
-                game.i18n.format("PCTM.FilterIncludeExcludeError"));
-                this.failedValidate = true;
-        }
+    includeItemsByCategory(categoryName) {
+        this.config.filters.addFilterEntry(FilterSet.FILTER_CATEGORY_NAME, FilterConfig.POLARITY_INCLUDE, categoryName);
+        return this;
     }
-
+    excludeItemsByCategory(categoryName) {
+        this.config.filters.addFilterEntry(FilterSet.FILTER_CATEGORY_NAME, FilterConfig.POLARITY_EXCLUDE, categoryName);
+        return this;
+    }
 
     async writeJournalPage() {
         // Catch-all toggle for when something has already gone wrong; the report
@@ -129,6 +116,5 @@ export default class CompendiumSummariser {
     addTypeNameFilter(typeName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
     addItemNameFilter(itemName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
     addCategoryFilter(categoryName) { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
-
     async write() { ui.notifications.error(game.i18n.format("PCTM.OldApi")); }
 }

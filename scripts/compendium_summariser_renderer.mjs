@@ -20,8 +20,6 @@ export default class CompendiumSummariserRenderer {
         for (const compendium of config.compendiums) {
             var itemCountFilteredByType = 0;
             const typesOfItemsFilteredByType = new Set();
-            var itemCountFilteredByCategory = 0;
-            const typesOfItemsFilteredByCategory = new Set();            
 
             for (var itemIndex of compendium.index.values()) {
                 const ogItem =  await compendium.getDocument(itemIndex._id);
@@ -32,6 +30,7 @@ export default class CompendiumSummariserRenderer {
                 if (item.documentName !== "Item") { continue; }
                 if (item.name === game.CF.TEMP_ENTITY_NAME) { continue; }
 
+                // Check filters to see if we want to output this item or not
                 if (!(
                     this.config.filters.filter(FilterSet.FILTER_ITEM_NAME, item.name, compendium.metadata.id)
                     && this.config.filters.filter(FilterSet.FILTER_TYPE_NAME, type, compendium.metadata.id)
@@ -45,30 +44,6 @@ export default class CompendiumSummariserRenderer {
                     continue; 
                 }
             
-
-                // // Check filters
-                // // TODO: if I ditch the generation report, this could be collapsed down to a couple of
-                // // stream functions...
-                // if (!config.filters.get(FilterConfig.FILTER_ITEM_NAME).filter(compendium.metadata.id, item.name)) { 
-                //     buildReport.addEntry("PCTM.BuildReportFilterItem",
-                //         {itemName: item.name, 
-                //             compPackageName: compendium.metadata.packageName,
-                //             compName: compendium.metadata.name});
-                //     continue; 
-                // }
-                // if (!config.filters.get(FilterConfig.FILTER_TYPE_NAME).filter(compendium.metadata.id, type)) { 
-                //     itemCountFilteredByType++;
-                //     typesOfItemsFilteredByType.add(type);
-                //     continue; 
-                // }
-                // if (!config.filters.get(FilterConfig.FILTER_CATEGORY_NAME).filter(compendium.metadata.id, item.system.category)) {
-                //     itemCountFilteredByCategory++;
-                //     typesOfItemsFilteredByCategory.add(type);
-                //     continue; 
-                // }
-
-
-
                 // Tuck some metadata about the compendium this item came from into it
                 // so we can reference these in the table templates.
                 item.metadata_id = compendium.metadata.id;

@@ -64,6 +64,10 @@ export class FilterConfig {
         if (!this.filterData.has(packageName)) {
             return false;
         }
+
+        for 
+
+
         if (this.filterData.get(packageName).includes(thing)) {
             return true;
         }

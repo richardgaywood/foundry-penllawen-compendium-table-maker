@@ -2,6 +2,8 @@
 ### v1.4.0 (2023-0x-xx)
 
 * Switch to proper Foundry tooltips and remove my awful hacky CSS; much better UX.
+* Totally rewrote the item filtering methods; it now offers three types of filter (item name, item type, and item category) and the ability to defined include or exclude filters. 
+* Switched item filtering to be a locale-aware case-insensitive string comparison; it should be less brittle now.
 
 ### v1.3.1 (2023-03-19)
 
