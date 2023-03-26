@@ -121,13 +121,6 @@ export default class CompendiumSummariserRenderer {
             newContent = newContent.concat("\n\n", rendered);
         }
 
-        // awful hack here
-        // my current CSS implementation goes wonky if there's not enough room at the bottom of the
-        // viewport to render the popup. I'm going to give it room by... just padding with some
-        // whitespace.
-        // TODO: delete now I have proper tooltips
-        newContent = newContent.concat('<p class="paddingGraf"></p>');
-
         if (config.outputJournalId && config.journalPageName) {
             JournalEntryPage.create({
                     name: config.journalPageName, 

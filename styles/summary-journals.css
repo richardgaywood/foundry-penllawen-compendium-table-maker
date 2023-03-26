@@ -41,17 +41,11 @@ div.pl-summary-journals .popup {
     transform: scale(1);
   }
 
-
   div.pl-summary-journals table {
     border-collapse: collapse;
   }
 
-
   p.compendiumSource {
     font-style: italic;
     color: #222222;
-  }
-
-  p.paddingGraf {
-    padding-top: 250px;
   }
