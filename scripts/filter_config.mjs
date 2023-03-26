@@ -40,8 +40,6 @@ export class FilterConfig {
             this.filterData.set(this.packageName, []);
         }         
         this.filterData.get(this.packageName).push(thing);
-
-        console.log(this);
     }
 
     // Return true if it should be kept, false if it should be
@@ -100,8 +98,6 @@ export class FilterSet {
     }
 
     filter(filterType, thing, packageName) {
-        console.log("Filtering for", filterType, thing, packageName, 
-            "outcome:", this.filters.get(filterType).filter(packageName, thing));
         return this.filters.get(filterType).filter(packageName, thing);
     }
 }

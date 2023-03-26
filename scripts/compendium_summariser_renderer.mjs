@@ -62,7 +62,6 @@ export default class CompendiumSummariserRenderer {
                 var folderName = "";
                 // Sort items in the output journal by their defined SWADE category name.
                 if (item.system.category) {
-                    // console.log(item.system.category, item);
                     if (config.categoryRenames.has(item.system.category)) {
                         folderName = config.categoryRenames.get(item.system.category);
                     } else {

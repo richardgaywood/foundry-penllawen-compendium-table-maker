@@ -1,8 +1,8 @@
 
 ### v1.4.0 (2023-03-26)
 
-* Switch to proper Foundry tooltips and remove my awful hacky CSS; much better UX.
-* Totally rewrote the item filtering methods; it now offers three types of filter (item name, item type, and item category) and the ability to defined include or exclude filters. 
+* Switch to proper Foundry tooltips and remove my awful hacky CSS; much (much!) better UX.
+* Totally rewrote the item filtering methods; it now offers three types of filter (item name, item type, and item category) and the ability to defined include or exclude filters. YOU WILL NEED TO UPDATE YOUR OLD MACROS, please see README for details of the new methods to call.
 * Switched item filtering to be a locale-aware case-insensitive string comparison; it should be less brittle now.
 
 ### v1.3.1 (2023-03-19)
