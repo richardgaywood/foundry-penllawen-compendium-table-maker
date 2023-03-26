@@ -100,29 +100,87 @@ await s.addJournalPageNamed("Skills")
   .writeJournalPage();
 ```
 
-### Filtering items by category
 
-You might wish to remove an entire category of things from a given Compendium. For example, the code below will create a single Journal page with only the weapons from the core SWADE book used in a modern setting:
+### Filtering items 
+
+You may not want every item in the source compendium to make it into your Journal. There are three ways to filter them: on the item's name, on its type ("armor", "weapon", etc), and on its "category" (this is a string on the item's character sheet.) Additionally, each of these can be include-filters (ie. only the matching things are in the Journal) or exclude-filters (the matching thing are left out, and the Journal contains everything else.)
+
+The methods to call in your macro are:
+
+```javascript
+var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
+await s.makeNewJournalNamed("test journal");
+
+
+await s.addJournalPageNamed("Everything")
+  .enableDebug()
+  .addInputCompendium("world.mixed-content-compendium")
+  .writeJournalPage();
+
+
+await s.addJournalPageNamed("Just weapons")
+  .enableDebug()
+  .addInputCompendium("world.mixed-content-compendium")
+     .includeItemsByType("weapon")
+  .writeJournalPage();
+
+await s.addJournalPageNamed("No weapons")
+  .enableDebug()
+  .addInputCompendium("world.mixed-content-compendium")
+     .excludeItemsByType("weapon")
+  .writeJournalPage();
+
+
+await s.addJournalPageNamed("Just the backpack")
+  .enableDebug()
+  .addInputCompendium("world.mixed-content-compendium")
+     .includeItemsByName("Backpack")
+  .writeJournalPage();
+
+await s.addJournalPageNamed("No backpack")
+  .enableDebug()
+  .addInputCompendium("world.mixed-content-compendium")
+     .excludeItemsByName("Backpack")
+  .writeJournalPage();
+
+
+await s.addJournalPageNamed("Just lasers")
+  .enableDebug()
+  .addInputCompendium("world.mixed-content-compendium")
+     .includeItemsByCategory("Lasers (Futuristic)")
+  .writeJournalPage();
+
+await s.addJournalPageNamed("No Lasers")
+  .enableDebug()
+  .addInputCompendium("world.mixed-content-compendium")
+     .excludeItemsByCategory("Lasers (Futuristic)")
+  .writeJournalPage();
+```
+
+Currently, `includeItemsByType` and `excludeItemsByType` take the internal SWADE names for item types, which are always in lowercase and always in English. At time of writing, the valid values are: 
+
+
+#### Example of filtering by category
+
+The code below will create a single Journal page with only the weapons from the core SWADE book that are used in a modern setting:
 
 ```javascript
 await s.addJournalPageNamed("Modern SWADE weapons")
   .enableDebug()
   .addInputCompendium("swade-core-rules.swade-personal-weapons")
-    .addCategoryFilter("Blackpowder Weapons")
-    .addCategoryFilter("Melee Weapons, Futuristic")
-    .addCategoryFilter("Melee Weapons, Medieval")
-    .addCategoryFilter("Ranged Weapons, Medieval")
+    .excludeItemsByCategory("Blackpowder Weapons")
+    .excludeItemsByCategory("Melee Weapons, Futuristic")
+    .excludeItemsByCategory("Melee Weapons, Medieval")
+    .excludeItemsByCategory("Ranged Weapons, Medieval")
   .addInputCompendium("swade-core-rules.swade-modern-firearms")
-    .addCategoryFilter("Lasers (Futuristic)")
+    .excludeItemsByCategory("Lasers (Futuristic)")
   .addInputCompendium("swade-core-rules.swade-special-weapons")
-    .addCategoryFilter("Cannons")
-    .addCategoryFilter("Catapults")
+    .excludeItemsByCategory("Cannons")
+    .excludeItemsByCategory("Catapults")
   .writeJournalPage();
 ```
 
-**Important Note**: The category name filtering is currently _case sensitive_. So if your item in Foundry is in a category called "Melee Weapons, Futuristic" but you write "melee weapons, futuristic", it _will not filter successfully_. If in doubt, copy/paste the name directly from the item.
-
-### Filtering items by name
+#### Example of filtering items by name
 
 Sometimes you want to say "take all of the items in this compendium except a few specific ones." For example, in the Sprawlrunners setting, quite a few Edges from the core book are not available or replaced by customised versions specific to the setting. You can do this like so:
 
@@ -135,33 +193,31 @@ await s.makeNewJournalNamed("This is my Journal for Sprawlrunners");
 await s.addJournalPageNamed("Sprawlrunners Edges")
   .addInputCompendium("sprawl-core-rules.sprawlrunner-edges")
   .addInputCompendium("swade-core-rules.swade-edges")
-    .addItemNameFilter("Arcane Background (Gifted)")  
-    .addItemNameFilter("Arcane Background (Magic)")  
-    .addItemNameFilter("Arcane Background (Miracles)")  
-    .addItemNameFilter("Arcane Background (Psionics)")  
-    .addItemNameFilter("Arcane Background (Weird Science)")  
-    .addItemNameFilter("Aristocrat")  
-    .addItemNameFilter("Rich")
-    .addItemNameFilter("Filthy Rich")
-    .addItemNameFilter("Artificer")
-    .addItemNameFilter("Channeling")
-    .addItemNameFilter("Concentration")
-    .addItemNameFilter("Extra Effort")
-    .addItemNameFilter("Gadgeteer")
-    .addItemNameFilter("Holy/Unholy Warrior")
-    .addItemNameFilter("Improved Rapid Recharge")
-    .addItemNameFilter("Mentalist")
-    .addItemNameFilter("Power Points")
-    .addItemNameFilter("Power Surge")
-    .addItemNameFilter("Rapid Recharge")
-    .addItemNameFilter("Soul Drain")
-    .addItemNameFilter("Wizard")
+    .excludeItemsByName("Arcane Background (Gifted)")  
+    .excludeItemsByName("Arcane Background (Magic)")  
+    .excludeItemsByName("Arcane Background (Miracles)")  
+    .excludeItemsByName("Arcane Background (Psionics)")  
+    .excludeItemsByName("Arcane Background (Weird Science)")  
+    .excludeItemsByName("Aristocrat")  
+    .excludeItemsByName("Rich")
+    .excludeItemsByName("Filthy Rich")
+    .excludeItemsByName("Artificer")
+    .excludeItemsByName("Channeling")
+    .excludeItemsByName("Concentration")
+    .excludeItemsByName("Extra Effort")
+    .excludeItemsByName("Gadgeteer")
+    .excludeItemsByName("Holy/Unholy Warrior")
+    .excludeItemsByName("Improved Rapid Recharge")
+    .excludeItemsByName("Mentalist")
+    .excludeItemsByName("Power Points")
+    .excludeItemsByName("Power Surge")
+    .excludeItemsByName("Rapid Recharge")
+    .excludeItemsByName("Soul Drain")
+    .excludeItemsByName("Wizard")
   .writeJournalPage();
 ```
 
-**Important Note**: The item name filtering is currently _case sensitive_. So if your item in Foundry is called "Filthy Rich" but you write "filthy rich" or even "Filthy rich" in your macro, it _will not filter successfully_. If in doubt, copy/paste the name directly from the item.
-
-### Filtering items by type
+#### Example of filtering items by type
 
 Some of my houserule compendiums have gear of different types next to each other, for example I have guns and their ammunition in the same compendium. By default, this will produce a single JournalEntry with two tables in it - one for the weapons, one for the ammunition and other gear items. I can change this behaviour by adding a filter on item type:
 
@@ -172,12 +228,12 @@ await s.makeNewJournalNamed("This is my Journal for houseruled items");
 
 await s.addJournalPageNamed("Houserule weapons")
   .addInputCompendium("penllawen-sprawlrunners-extras.weapons")
-      .addTypeNameFilter("gear")
+      .includeItemsByType("weapon")
   .writeJournalPage();
 
 await s.addJournalPageNamed("Houserule ammo & gear")
   .addInputCompendium("penllawen-sprawlrunners-extras.weapons")
-      .addTypeNameFilter("weapons")
+      .excludeItemsByType("gear")
   .writeJournalPage();
 ```
 
@@ -192,12 +248,12 @@ await s.makeNewJournalNamed("Deadlands stuff");
 
 await s.addJournalPageNamed("Deadlands Edges")
   .addInputCompendium("swade-core-rules.swade-edges")
-    .addItemNameFilter("Arcane Background (Gifted)")  
-    .addItemNameFilter("Arcane Background (Magic)")  
-    .addItemNameFilter("Arcane Background (Miracles)")  
-    .addItemNameFilter("Arcane Background (Psionics)")  
-    .addItemNameFilter("Arcane Background (Weird Science)")  
-    .addItemNameFilter("Soul Drain")  
+    .excludeItemsByName("Arcane Background (Gifted)")  
+    .excludeItemsByName("Arcane Background (Magic)")  
+    .excludeItemsByName("Arcane Background (Miracles)")  
+    .excludeItemsByName("Arcane Background (Psionics)")  
+    .excludeItemsByName("Arcane Background (Weird Science)")  
+    .excludeItemsByName("Soul Drain")  
   .addInputCompendium("deadlands-core-rules.deadlands-edges")
     .addCategoryRenamer("Background Edge", "Background")
     .addCategoryRenamer("Combat Edge", "Combat")
@@ -215,7 +271,7 @@ await s.addJournalPageNamed("Deadlands Hindrances")
 s.showReport();
 ```
 
-## Extended example: Sprawnlunners Edges
+## Extended example: Sprawlunners Edges
 
 ```javascript
 var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
@@ -225,27 +281,27 @@ await s.makeNewJournalNamed("Sprawlrunners stuff");
 await s.addJournalPageNamed("Sprawlrunners Edges")
   .addInputCompendium("sprawl-core-rules.sprawlrunner-edges")
   .addInputCompendium("swade-core-rules.swade-edges")
-    .addItemNameFilter("Arcane Background (Gifted)")  
-    .addItemNameFilter("Arcane Background (Magic)")  
-    .addItemNameFilter("Arcane Background (Miracles)")  
-    .addItemNameFilter("Arcane Background (Psionics)")  
-    .addItemNameFilter("Arcane Background (Weird Science)")  
-    .addItemNameFilter("Aristocrat")  
-    .addItemNameFilter("Rich")
-    .addItemNameFilter("Filthy Rich")
-    .addItemNameFilter("Artificer")
-    .addItemNameFilter("Channeling")
-    .addItemNameFilter("Concentration")
-    .addItemNameFilter("Extra Effort")
-    .addItemNameFilter("Gadgeteer")
-    .addItemNameFilter("Holy/Unholy Warrior")
-    .addItemNameFilter("Improved Rapid Recharge")
-    .addItemNameFilter("Mentalist")
-    .addItemNameFilter("Power Points")
-    .addItemNameFilter("Power Surge")
-    .addItemNameFilter("Rapid Recharge")
-    .addItemNameFilter("Soul Drain")
-    .addItemNameFilter("Wizard")
+    .excludeItemsByName("Arcane Background (Gifted)")  
+    .excludeItemsByName("Arcane Background (Magic)")  
+    .excludeItemsByName("Arcane Background (Miracles)")  
+    .excludeItemsByName("Arcane Background (Psionics)")  
+    .excludeItemsByName("Arcane Background (Weird Science)")  
+    .excludeItemsByName("Aristocrat")  
+    .excludeItemsByName("Rich")
+    .excludeItemsByName("Filthy Rich")
+    .excludeItemsByName("Artificer")
+    .excludeItemsByName("Channeling")
+    .excludeItemsByName("Concentration")
+    .excludeItemsByName("Extra Effort")
+    .excludeItemsByName("Gadgeteer")
+    .excludeItemsByName("Holy/Unholy Warrior")
+    .excludeItemsByName("Improved Rapid Recharge")
+    .excludeItemsByName("Mentalist")
+    .excludeItemsByName("Power Points")
+    .excludeItemsByName("Power Surge")
+    .excludeItemsByName("Rapid Recharge")
+    .excludeItemsByName("Soul Drain")
+    .excludeItemsByName("Wizard")
   .writeJournalPage();
 
 s.showReport();
