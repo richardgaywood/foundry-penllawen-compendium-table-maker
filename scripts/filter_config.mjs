@@ -60,18 +60,15 @@ export class FilterConfig {
     }
 
     #thingIsInFilter(packageName, thing) {
-        // TODO: should this be case insensitive?
         if (!this.filterData.has(packageName)) {
             return false;
         }
 
-        for 
+        var foo = this.filterData.get(packageName).filter(
+            a => a.localeCompare(thing, undefined, { sensitivity: 'base' }) === 0
+        );
 
-
-        if (this.filterData.get(packageName).includes(thing)) {
-            return true;
-        }
-        return false;
+        return foo.length > 0;
     }
 }
 

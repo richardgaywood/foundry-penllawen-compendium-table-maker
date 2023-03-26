@@ -50,7 +50,7 @@ await s.addJournalPageNamed("Skills")
 
 This will compile the SWADE core rules compendium of all Edges and Gear items into a single JournalEntry with two pages, one for each. Obviously, you can change the name of the output journal and pages, and the input Compendium as you please. Note that you need the full "pack name" of the Compendium, in other words `swade-core-rules.swade-edges` and not just `swade-edges`. 
 
-`showReport()` at the end is optional but recommended. It'll pop up a litle dialog telling you what the module did.
+`showReport()` at the end is optional but recommended. It'll pop up a little dialog telling you what the module did.
 
 Each time you run this script, it'll make a whole new JournalEntry, which will be in the world (ie. not inside a Compendium.) You can move it afterwards to wherever you like. Used like this, the module will never overwrite any data in any existing Journal.
 
@@ -105,7 +105,13 @@ await s.addJournalPageNamed("Skills")
 
 You may not want every item in the source compendium to make it into your Journal. There are three ways to filter them: on the item's name, on its type ("armor", "weapon", etc), and on its "category" (this is a string on the item's character sheet.) Additionally, each of these can be include-filters (ie. only the matching things are in the Journal) or exclude-filters (the matching thing are left out, and the Journal contains everything else.)
 
-The methods to call in your macro are:
+Currently, `includeItemsByType` and `excludeItemsByType` take the internal SWADE names for item types, which are always in lowercase and always in English. At time of writing, the valid values are: `ability`, `action`, `armour`, `consumable`, `edge`, `gear`, `hindrance`, `power`, `skill`, `shield`, and `weapon`.
+
+**New in v1.4.0**: matching between the string you supply and the item is case-insensitive and will ignore accented characters. This should make the filtering less brittle.
+
+Note that you cannot define both an exclude and include filter on the same item characteristic (that doesn't make any sense.) The code will warn you if you try.
+
+The methods to call in your macro are shown here:
 
 ```javascript
 var s = game.modules.get("penllawen-compendium-table-maker").api.getCompendiumSummariser();
@@ -157,7 +163,6 @@ await s.addJournalPageNamed("No Lasers")
   .writeJournalPage();
 ```
 
-Currently, `includeItemsByType` and `excludeItemsByType` take the internal SWADE names for item types, which are always in lowercase and always in English. At time of writing, the valid values are: 
 
 
 #### Example of filtering by category
