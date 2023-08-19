@@ -1,11 +1,8 @@
 {   
-    "name": "penllawen-compendium-table-maker",   
+    "id": "penllawen-compendium-table-maker",   
     "title": "Compendium Table Maker (by PenLlawen)",   
     "description": "A tool to automate the creation of quick reference tables from Compendiums",   
 
-
-
-    "author": "PenLlawen",
     "authors": [
       {      
         "name": "PenLlawen",
@@ -31,8 +28,10 @@
       "./styles/summary-journals.css"
     ],  
 
-    "minimumCoreVersion": "10",
-    "compatibleCoreVersion": "10",
+    "compatibility": {
+      "minimum": 10,
+      "verified": "11.307"
+    },
 
     "version": "0.0.1",
     "url": "https://github.com/richardgaywood/foundry-penllawen-compendium-table-maker",
