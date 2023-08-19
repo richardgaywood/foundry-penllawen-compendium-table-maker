@@ -1,3 +1,7 @@
+### v1.4.1 (2023-08-19)
+
+* Fix a bug that causes a crash if you don't have Compendium Folders installed (as CF is no longer required for SWADE)
+* Test for and update to Foundry v11 compatibility
 
 ### v1.4.0 (2023-03-26)
 
