@@ -28,7 +28,7 @@ export default class CompendiumSummariserRenderer {
                 const type = item.type;
 
                 if (item.documentName !== "Item") { continue; }
-                if (item.name === game.CF.TEMP_ENTITY_NAME) { continue; }
+                if (game.CF && item.name === game.CF.TEMP_ENTITY_NAME) { continue; }
 
                 // Check filters to see if we want to output this item or not
                 if (!(
